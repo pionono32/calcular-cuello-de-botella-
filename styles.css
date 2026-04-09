@@ -1,0 +1,444 @@
+:root {
+  --bg: #071018;
+  --bg-soft: #101922;
+  --panel: rgba(14, 24, 35, 0.92);
+  --panel-border: rgba(123, 157, 192, 0.18);
+  --text: #eef6ff;
+  --muted: #98abc0;
+  --accent: #6de0ff;
+  --danger: #ff617b;
+  --warning: #f0cb62;
+  --success: #6ee7a6;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(109, 224, 255, 0.16), transparent 34%),
+    linear-gradient(180deg, #09111a 0%, #04070d 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.app-shell {
+  width: min(1220px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 28px 0 44px;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+}
+
+.hero {
+  padding: 30px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  right: -80px;
+  top: -80px;
+  background: radial-gradient(circle, rgba(109, 224, 255, 0.18), transparent 68%);
+  pointer-events: none;
+}
+
+.eyebrow,
+.section-kicker {
+  margin: 0 0 10px;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.8rem;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 12px;
+  font-size: clamp(2rem, 4.8vw, 3.5rem);
+}
+
+.intro {
+  width: min(760px, 100%);
+  margin: 0 auto;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.methodology-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 18px 0;
+}
+
+.methodology-card {
+  padding: 22px;
+}
+
+.methodology-card p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: 410px minmax(0, 1fr);
+  gap: 22px;
+  padding: 22px;
+}
+
+.controls-card,
+.comparison-card,
+.result-card {
+  background: var(--bg-soft);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.result-stack {
+  display: grid;
+  gap: 18px;
+}
+
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.preset-switch {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 999px;
+}
+
+.preset-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font: inherit;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+}
+
+.preset-btn.is-active {
+  color: #04121d;
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.controls-grid,
+.compare-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.94rem;
+}
+
+select {
+  width: 100%;
+  padding: 13px 15px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #0a1219;
+  color: var(--text);
+  font: inherit;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.reference-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: #d6e4f6;
+  line-height: 1.6;
+}
+
+.result-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.result-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gauge-card {
+  padding: 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.bottleneck-gauge {
+  --gauge-color: var(--warning);
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at center, #0d1620 58%, transparent 59%),
+    conic-gradient(var(--gauge-color) var(--gauge-value), rgba(255, 255, 255, 0.08) 0);
+  box-shadow:
+    inset 0 0 18px rgba(0, 0, 0, 0.35),
+    0 8px 24px rgba(0, 0, 0, 0.22);
+}
+
+.gauge-inner {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background: linear-gradient(180deg, #13202c, #0c141d);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gauge-inner strong {
+  display: block;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.gauge-inner span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.confidence-pill {
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: #d9e8fb;
+  white-space: nowrap;
+}
+
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.metric-card {
+  padding: 16px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.metric-card span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.metric-card strong {
+  font-size: 1.65rem;
+}
+
+.chart-card {
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.chart-row {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+}
+
+.chart-row + .chart-row {
+  margin-top: 14px;
+}
+
+.bar-track {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  transition: width 0.25s ease;
+}
+
+.bar-fps {
+  background: linear-gradient(90deg, #6de0ff, #4cb7ff);
+}
+
+.bar-low {
+  background: linear-gradient(90deg, #f7d368, #f2a94e);
+}
+
+.bar-gpu {
+  background: linear-gradient(90deg, #6ee7a6, #4bcf92);
+}
+
+.explanation {
+  margin: 18px 0 0;
+  line-height: 1.7;
+  color: #d7e6f7;
+}
+
+.result-cpu {
+  background: rgba(255, 97, 123, 0.1);
+  border-color: rgba(255, 97, 123, 0.45);
+}
+
+.result-balanced {
+  background: rgba(240, 203, 98, 0.1);
+  border-color: rgba(240, 203, 98, 0.45);
+}
+
+.result-gpu {
+  background: rgba(110, 231, 166, 0.1);
+  border-color: rgba(110, 231, 166, 0.45);
+}
+
+.compare-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.compare-item {
+  padding: 18px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.compare-item h3 {
+  margin-bottom: 8px;
+}
+
+.compare-item p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.compare-meta {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+  color: #dce8f6;
+}
+
+@media (max-width: 1080px) {
+  .workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .methodology-grid,
+  .controls-grid,
+  .compare-controls,
+  .compare-results,
+  .metric-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-head,
+  .result-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .result-side {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .chart-row {
+    grid-template-columns: 1fr;
+  }
+
+  .workspace {
+    padding: 16px;
+  }
+
+  .hero,
+  .methodology-card,
+  .controls-card,
+  .comparison-card,
+  .result-card {
+    padding: 18px;
+  }
+}

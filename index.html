@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GPU/CPU Gaming Performance Analyzer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="panel hero">
+        <p class="eyebrow">Estimaciones conservadoras</p>
+        <h1>GPU/CPU Gaming Performance Analyzer</h1>
+        <p class="intro">
+          Simula rendimiento gaming con una base de benchmarks conservadora, 1% lows,
+          uso de GPU, RAM y comportamiento por resolucion. El objetivo es acercarse a
+          un resultado creible, no al numero mas lindo.
+        </p>
+      </section>
+
+      <section class="methodology-grid">
+        <article class="panel methodology-card">
+          <h2>1. Estructura de datos</h2>
+          <p>
+            Cada juego tiene categoria, preset y tablas de benchmark para CPU y GPU con
+            promedio, 1% low y uso de GPU en escenarios de referencia. Luego el modelo
+            aplica RAM, resolucion y cache extra como modificadores acotados.
+          </p>
+        </article>
+
+        <article class="panel methodology-card">
+          <h2>2. Supuestos</h2>
+          <p>
+            Las cifras parten de referencias conservadoras vistas en reviews y se ajustan
+            hacia abajo cuando falta informacion exacta. Los juegos CPU-bound premian mas
+            cache, RAM y CPU; los GPU-bound castigan antes a la grafica.
+          </p>
+        </article>
+
+        <article class="panel methodology-card">
+          <h2>3. Limitaciones</h2>
+          <p>
+            No reemplaza un benchmark real del equipo exacto. Drivers, parches, mapa,
+            ray tracing, DLSS/FSR, temperatura y segundo plano pueden mover los numeros.
+            Por eso las salidas muestran rango y confianza.
+          </p>
+        </article>
+      </section>
+
+      <section class="panel workspace">
+        <div class="controls-card">
+          <div class="section-head">
+            <div>
+              <p class="section-kicker">Configuracion</p>
+              <h2>Escenario principal</h2>
+            </div>
+
+            <div class="preset-switch" id="preset-switch" aria-label="Preset grafico">
+              <button type="button" class="preset-btn is-active" data-preset="competitive">
+                Competitive
+              </button>
+              <button type="button" class="preset-btn" data-preset="ultra">
+                Ultra
+              </button>
+            </div>
+          </div>
+
+          <form class="controls-grid" id="controls-form">
+            <label>
+              CPU
+              <select id="cpu-select"></select>
+            </label>
+
+            <label>
+              GPU
+              <select id="gpu-select"></select>
+            </label>
+
+            <label>
+              Juego
+              <select id="game-select"></select>
+            </label>
+
+            <label>
+              Resolucion
+              <select id="resolution-select"></select>
+            </label>
+
+            <label>
+              RAM
+              <select id="ram-capacity-select"></select>
+            </label>
+
+            <label>
+              Frecuencia RAM
+              <select id="ram-speed-select"></select>
+            </label>
+
+            <label>
+              Canal
+              <select id="ram-channel-select"></select>
+            </label>
+          </form>
+
+          <div class="reference-note">
+            <strong>Modelo:</strong>
+            <span id="reference-text"></span>
+          </div>
+        </div>
+
+        <div class="result-stack">
+          <article id="result-card" class="result-card result-balanced">
+            <div class="result-head">
+              <div>
+                <p class="section-kicker">Diagnostico</p>
+                <h2 id="diagnosis-text">Balanced</h2>
+              </div>
+
+              <div class="result-side">
+                <div class="gauge-card">
+                  <div
+                    class="bottleneck-gauge"
+                    id="bottleneck-gauge"
+                    style="--gauge-value: 0%;"
+                  >
+                    <div class="gauge-inner">
+                      <strong id="bottleneck-percent">0%</strong>
+                      <span>Cuello</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="confidence-pill" id="confidence-pill">Confianza media</div>
+              </div>
+            </div>
+
+            <div class="metric-grid">
+              <article class="metric-card">
+                <span>FPS promedio</span>
+                <strong id="avg-fps-value">0</strong>
+              </article>
+              <article class="metric-card">
+                <span>Rango estimado</span>
+                <strong id="range-value">0 - 0</strong>
+              </article>
+              <article class="metric-card">
+                <span>1% low</span>
+                <strong id="low-value">0</strong>
+              </article>
+              <article class="metric-card">
+                <span>Uso de GPU</span>
+                <strong id="gpu-usage-value">0%</strong>
+              </article>
+            </div>
+
+            <div class="chart-card">
+              <div class="chart-row">
+                <span>FPS promedio</span>
+                <div class="bar-track">
+                  <div id="avg-bar" class="bar-fill bar-fps"></div>
+                </div>
+              </div>
+              <div class="chart-row">
+                <span>1% low</span>
+                <div class="bar-track">
+                  <div id="low-bar" class="bar-fill bar-low"></div>
+                </div>
+              </div>
+              <div class="chart-row">
+                <span>Uso de GPU</span>
+                <div class="bar-track">
+                  <div id="gpu-bar" class="bar-fill bar-gpu"></div>
+                </div>
+              </div>
+            </div>
+
+            <p id="explanation-text" class="explanation"></p>
+          </article>
+
+          <article class="comparison-card">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Comparacion</p>
+                <h2>CPU vs CPU</h2>
+              </div>
+            </div>
+
+            <div class="compare-controls">
+              <label>
+                CPU A
+                <select id="compare-cpu-a"></select>
+              </label>
+
+              <label>
+                CPU B
+                <select id="compare-cpu-b"></select>
+              </label>
+            </div>
+
+            <div id="compare-results" class="compare-results"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
