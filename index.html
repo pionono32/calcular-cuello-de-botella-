@@ -9,13 +9,30 @@
   <body>
     <main class="app-shell">
       <section class="panel hero">
-        <p class="eyebrow">Estimaciones conservadoras</p>
-        <h1>GPU/CPU Gaming Performance Analyzer</h1>
-        <p class="intro">
-          Simula rendimiento gaming con una base de benchmarks conservadora, 1% lows,
-          uso de GPU, RAM y comportamiento por resolucion. El objetivo es acercarse a
-          un resultado creible, no al numero mas lindo.
-        </p>
+        <div class="hero-copy">
+          <p class="eyebrow">Estimaciones conservadoras</p>
+          <h1>GPU/CPU Gaming Performance Analyzer</h1>
+          <p class="intro">
+            Simula rendimiento gaming con una base de benchmarks conservadora, 1% lows,
+            uso de GPU, RAM y comportamiento por resolucion. El objetivo es acercarse a
+            un resultado creible, no al numero mas lindo.
+          </p>
+        </div>
+
+        <div class="hero-stats">
+          <article class="hero-chip">
+            <span>Modo</span>
+            <strong>Benchmark-safe</strong>
+          </article>
+          <article class="hero-chip">
+            <span>Salida</span>
+            <strong>FPS, 1% low y GPU usage</strong>
+          </article>
+          <article class="hero-chip">
+            <span>Enfoque</span>
+            <strong>Cuello realista, no inflado</strong>
+          </article>
+        </div>
       </section>
 
       <section class="methodology-grid">
@@ -68,11 +85,31 @@
           <form class="controls-grid" id="controls-form">
             <label>
               CPU
+              <span class="search-field">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input
+                  id="cpu-search"
+                  class="search-input"
+                  type="text"
+                  placeholder="Buscar procesador"
+                  autocomplete="off"
+                />
+              </span>
               <select id="cpu-select"></select>
             </label>
 
             <label>
               GPU
+              <span class="search-field">
+                <span class="search-icon" aria-hidden="true">⌕</span>
+                <input
+                  id="gpu-search"
+                  class="search-input"
+                  type="text"
+                  placeholder="Buscar placa de video"
+                  autocomplete="off"
+                />
+              </span>
               <select id="gpu-select"></select>
             </label>
 
@@ -187,11 +224,31 @@
             <div class="compare-controls">
               <label>
                 CPU A
+                <span class="search-field">
+                  <span class="search-icon" aria-hidden="true">⌕</span>
+                  <input
+                    id="compare-cpu-a-search"
+                    class="search-input"
+                    type="text"
+                    placeholder="Buscar CPU A"
+                    autocomplete="off"
+                  />
+                </span>
                 <select id="compare-cpu-a"></select>
               </label>
 
               <label>
                 CPU B
+                <span class="search-field">
+                  <span class="search-icon" aria-hidden="true">⌕</span>
+                  <input
+                    id="compare-cpu-b-search"
+                    class="search-input"
+                    type="text"
+                    placeholder="Buscar CPU B"
+                    autocomplete="off"
+                  />
+                </span>
                 <select id="compare-cpu-b"></select>
               </label>
             </div>
