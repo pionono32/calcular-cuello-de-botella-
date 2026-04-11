@@ -6,10 +6,10 @@ const MODEL = {
       cacheClass: "standard",
       cacheBonus: -0.03,
       ryzenMemorySensitivity: 1.08,
-      cpuFactor: 0.62,
-      lowFactor: 0.58,
+      cpuFactor: 0.48,
+      lowFactor: 0.38,
       confidence: "medium",
-      notes: "APU vieja para una GPU dedicada potente; suele sufrir mucho en minimos.",
+      notes: "APU vieja de 4/8; con GPUs potentes queda muy limitada en promedio y, sobre todo, en 1% lows.",
     },
     "Ryzen 5 3500": {
       vendor: "AMD",
@@ -87,6 +87,28 @@ const MODEL = {
       lowFactor: 0.92,
       confidence: "high",
       notes: "Una de las referencias clasicas de AM4 para jugar sin gastar demasiado.",
+    },
+    "Ryzen 5 5600X3D": {
+      vendor: "AMD",
+      cores: 6,
+      cacheClass: "x3d",
+      cacheBonus: 0.1,
+      ryzenMemorySensitivity: 0.72,
+      cpuFactor: 1,
+      lowFactor: 1,
+      confidence: "medium",
+      notes: "La cache 3D lo vuelve muy interesante para gaming, sobre todo en juegos CPU-bound.",
+    },
+    "Ryzen 5 5500X3D": {
+      vendor: "AMD",
+      cores: 6,
+      cacheClass: "x3d",
+      cacheBonus: 0.09,
+      ryzenMemorySensitivity: 0.74,
+      cpuFactor: 0.97,
+      lowFactor: 0.96,
+      confidence: "medium",
+      notes: "Seis nucleos con 3D V-Cache: muy buena mejora sobre el 5500 comun, sobre todo en juegos CPU-bound donde la cache extra marca la diferencia.",
     },
     "Ryzen 5 5600G": {
       vendor: "AMD",
@@ -274,6 +296,17 @@ const MODEL = {
       lowFactor: 1.17,
       confidence: "medium",
       notes: "Tope AMD muy capaz, con gran techo tanto en gaming como en tareas mixtas.",
+    },
+    "Ryzen 9 9900X3D": {
+      vendor: "AMD",
+      cores: 12,
+      cacheClass: "x3d",
+      cacheBonus: 0.19,
+      ryzenMemorySensitivity: 0.48,
+      cpuFactor: 1.19,
+      lowFactor: 1.18,
+      confidence: "low",
+      notes: "Estimado con prudencia como una evolucion moderna de la familia X3D.",
     },
     "Ryzen 7 9700X": {
       vendor: "AMD",
@@ -1037,203 +1070,307 @@ function renderSuggestions(listElement, matches, type, onSelect) {
   listElement.hidden = false;
 }
 
-function getRamModifiers(cpu, gameName, capacity, speed, channel) {
-  const capacityProfile = MODEL.ram.capacity[capacity];
-  const speedProfile = MODEL.ram.speed[speed];
-  const channelProfile = MODEL.ram.channel[channel];
-  const game = MODEL.games[gameName];
-  const memorySensitivity = cpu.vendor === "AMD" ? cpu.ryzenMemorySensitivity : 0.55;
-  const speedEffect = speedProfile.baseModifier * memorySensitivity * game.ramWeight;
+// ─── CALCULATION ENGINE v2 ────────────────────────────────────────────────────
+//
+// Modelo fisicamente coherente:
+//
+//  1. Techo GPU (gpuCeiling): cuantos FPS puede entregar la GPU a plena carga
+//     en este juego/resolucion/preset. Es independiente del CPU.
+//
+//  2. Techo CPU (cpuCeiling): cuantos FPS puede "alimentar" el CPU al render
+//     thread. Depende de cache, nucleos, RAM y sensibilidad del juego al CPU.
+//
+//  3. GPU Usage real: si cpuCeiling < gpuCeiling, la GPU espera frames del CPU
+//     y su uso baja proporcionalmente. Si gpuCeiling <= cpuCeiling, la GPU
+//     corre al maximo y su uso es ~97-99%.
+//
+//  4. FPS final: no es min() duro sino una combinacion ponderada por
+//     gameCpuWeight para reflejar que el juego nunca es 100% CPU ni 100% GPU.
+//
+//  5. 1% lows: modelados desde la varianza de frame time del componente
+//     limitante. CPU-bound => mayor varianza => lows mas bajos relativos.
+//     GPU-bound => frame time mas estable => lows mas altos relativos.
+//
+//  6. Bottleneck %: diferencia relativa entre ambos techos. Positivo = CPU
+//     limita, negativo = GPU limita. Cero = perfectamente balanceado.
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+function getRamMultipliers(cpuProfile, gameName, capacity, speed, channel) {
+  const capData   = MODEL.ram.capacity[capacity];
+  const speedData = MODEL.ram.speed[speed];
+  const chanData  = MODEL.ram.channel[channel];
+  const game      = MODEL.games[gameName];
+
+  // AMD es mas sensible a la frecuencia de RAM que Intel (IF/CCX latency)
+  const freqSensitivity = cpuProfile.vendor === "AMD"
+    ? cpuProfile.ryzenMemorySensitivity
+    : 0.45;
+
+  // El efecto de velocidad escala con cuanto le importa al juego la RAM
+  const speedBoost = speedData.baseModifier * freqSensitivity * game.ramWeight;
+
+  // Canal unico castiga mas a los lows (starvation en escenas cargadas)
+  const avgMult = 1 + capData.avgModifier + chanData.avgModifier + speedBoost;
+  const lowMult = 1 + capData.lowModifier + chanData.lowModifier + speedBoost * 1.3;
 
   return {
-    avgModifier: capacityProfile.avgModifier + channelProfile.avgModifier + speedEffect,
-    lowModifier:
-      capacityProfile.lowModifier + channelProfile.lowModifier + speedEffect * 1.12,
-    confidencePenalty:
-      capacityProfile.confidencePenalty + channelProfile.confidencePenalty,
+    avgMult: Math.max(avgMult, 0.5),
+    lowMult: Math.max(lowMult, 0.42),
+    confidencePenalty: capData.confidencePenalty + chanData.confidencePenalty,
   };
 }
 
-function buildCpuReference(cpu, gameName, presetName) {
-  const cpuProfile = MODEL.cpus[cpu];
-  const game = MODEL.games[gameName];
+// Techo puro de GPU: cuantos FPS entrega esta GPU en este escenario
+// independientemente del CPU. Es la referencia de "GPU sin hambre de frames".
+function buildGpuCeiling(gpuName, gameName, presetName, resolutionName) {
+  const gpu    = MODEL.gpus[gpuName];
+  const game   = MODEL.games[gameName];
   const preset = game.presets[presetName];
-  const x3dBonus = cpuProfile.cacheClass === "x3d" ? game.x3dWeight * cpuProfile.cacheBonus : 0;
+  const res    = MODEL.resolutions[resolutionName];
+
+  // A mayor resolucion la GPU se satura antes => mas uso, menos FPS
+  const resGpuScale = res.gpuScale;
+
+  const avgRaw = preset.gpuBaseline.avg * gpu.gpuFactor * resGpuScale;
+  const lowRaw = preset.gpuBaseline.low1 * gpu.lowFactor * resGpuScale;
+
+  // gpuUsage cuando esta GPU-limited: baseline + sesgo de saturacion del modelo
+  // saturationBias negativo = GPU muy potente, no llega a saturarse facil
+  const baseUsage = clamp(preset.gpuBaseline.gpuUsage + gpu.saturationBias, 85, 99);
 
   return {
-    avg: clamp(
-      Math.round(preset.cpuBaseline.avg * cpuProfile.cpuFactor * (1 + x3dBonus)),
-      preset.cpuClamp.min,
-      preset.cpuClamp.max
-    ),
-    low1: clamp(
-      Math.round(
-        preset.cpuBaseline.low1 *
-          cpuProfile.lowFactor *
-          (1 + x3dBonus * 1.05) *
-          (1 + Math.max(cpuProfile.cores - 6, 0) * 0.012)
-      ),
-      Math.round(preset.cpuClamp.min * 0.7),
-      Math.round(preset.cpuClamp.max * 0.88)
-    ),
-    gpuUsage: clamp(
-      Math.round(
-        preset.cpuBaseline.gpuUsage +
-          (cpuProfile.cpuFactor - 1) * 30 +
-          x3dBonus * 45
-      ),
-      60,
-      98
-    ),
+    avg:      clamp(Math.round(avgRaw), preset.gpuClamp.min, preset.gpuClamp.max),
+    low1:     clamp(Math.round(lowRaw), Math.round(preset.gpuClamp.min * 0.72), Math.round(preset.gpuClamp.max * 0.84)),
+    fullUsage: baseUsage,
   };
 }
 
-function buildGpuReference(gpu, gameName, presetName) {
-  const gpuProfile = MODEL.gpus[gpu];
-  const game = MODEL.games[gameName];
+// Techo de CPU: cuantos FPS puede alimentar el CPU al render thread.
+// Incluye efecto de X3D cache, nucleos extra, y RAM.
+function buildCpuCeiling(cpuName, gameName, presetName, resolutionName, ramMult) {
+  const cpu    = MODEL.cpus[cpuName];
+  const game   = MODEL.games[gameName];
   const preset = game.presets[presetName];
+  const res    = MODEL.resolutions[resolutionName];
+
+  // La cache 3D beneficia mas en juegos con alto x3dWeight
+  const x3dBonus = cpu.cacheClass === "x3d"
+    ? game.x3dWeight * cpu.cacheBonus
+    : 0;
+
+  // Nucleos extra sobre 6 ayudan en 1% lows (mejor scheduling, menos stalls)
+  const coreBonus = Math.max(cpu.cores - 6, 0) * 0.014;
+
+  // A mas resolucion, el cuello de CPU importa menos (GPU absorbe mas trabajo)
+  // cpuScale: 1080p=1.0, 1440p=0.95, 4K=0.90
+  const resCpuScale = res.cpuScale;
+
+  const avgRaw = preset.cpuBaseline.avg
+    * cpu.cpuFactor
+    * (1 + x3dBonus)
+    * ramMult.avgMult
+    * resCpuScale;
+
+  const lowRaw = preset.cpuBaseline.low1
+    * cpu.lowFactor
+    * (1 + x3dBonus * 1.08)   // X3D mejora mas los lows (frame time variance)
+    * (1 + coreBonus)
+    * ramMult.lowMult
+    * resCpuScale;
 
   return {
-    avg: clamp(
-      Math.round(preset.gpuBaseline.avg * gpuProfile.gpuFactor),
-      preset.gpuClamp.min,
-      preset.gpuClamp.max
-    ),
-    low1: clamp(
-      Math.round(preset.gpuBaseline.low1 * gpuProfile.lowFactor),
-      Math.round(preset.gpuClamp.min * 0.75),
-      Math.round(preset.gpuClamp.max * 0.86)
-    ),
-    gpuUsage: clamp(preset.gpuBaseline.gpuUsage + gpuProfile.saturationBias, 88, 99),
+    avg:  clamp(Math.round(avgRaw),  preset.cpuClamp.min, preset.cpuClamp.max),
+    low1: clamp(Math.round(lowRaw),  Math.round(preset.cpuClamp.min * 0.68), Math.round(preset.cpuClamp.max * 0.86)),
   };
+}
+
+// Combina ambos techos en FPS final y deriva todos los indicadores.
+// La clave: gpuWeight del juego determina cuanto "pesa" cada techo.
+function combineAndDerive(cpuCeiling, gpuCeiling, game, resolutionName, gpuProfile) {
+  // gameCpuWeight: que fraccion del rendimiento final depende del CPU
+  // CPU-bound=0.75, Mixed=0.50, GPU-bound=0.25
+  const cpuWeightMap  = { "CPU-bound": 0.75, Mixed: 0.50, "GPU-bound": 0.25 };
+  const cpuW = cpuWeightMap[game.category];
+  const gpuW = 1 - cpuW;
+
+  // FPS final: media ponderada de ambos techos
+  // Esto evita el "min() duro" que sobreestimaba bottleneck
+  const blendedAvg = cpuCeiling.avg * cpuW + gpuCeiling.avg * gpuW;
+  const blendedLow = cpuCeiling.low1 * cpuW + gpuCeiling.low1 * gpuW;
+
+  // Penalizacion adicional cuando hay desbalance severo:
+  // si un componente supera al otro en >40%, el mas lento tracciona fuerte
+  const avgRatio = cpuCeiling.avg / Math.max(gpuCeiling.avg, 1);
+  const imbalancePenalty = avgRatio < 0.6
+    ? (0.6 - avgRatio) * 0.55   // CPU muy limitado
+    : avgRatio > 1.65
+    ? (avgRatio - 1.65) * 0.18  // GPU muy limitado (menos impacto en avg)
+    : 0;
+
+  const finalAvg = Math.round(blendedAvg * (1 - imbalancePenalty));
+  const finalLow = Math.round(blendedLow * (1 - imbalancePenalty * 1.25));
+
+  // GPU usage real: cuando el CPU limita, la GPU espera y su uso cae
+  // gpuUsage = (finalAvg / gpuCeiling.avg) * fullUsage
+  // Cuando finalAvg == gpuCeiling.avg => usage == fullUsage (~97-99%)
+  // Cuando finalAvg << gpuCeiling.avg => usage cae proporcionalmente
+  const usageRaw = (finalAvg / Math.max(gpuCeiling.avg, 1)) * gpuCeiling.fullUsage;
+  const gpuUsage = clamp(Math.round(usageRaw), 42, 99);
+
+  // Bottleneck: diferencia relativa entre techos, con signo
+  // Positivo = CPU es el cuello (cpuCeiling < gpuCeiling)
+  // Negativo = GPU es el cuello
+  // Cero = balanceado
+  const diff = gpuCeiling.avg - cpuCeiling.avg;
+  const maxTecho = Math.max(cpuCeiling.avg, gpuCeiling.avg, 1);
+  const bottleneckRaw = (diff / maxTecho) * 100;
+
+  // Diagnostico basado en bottleneck real y uso de GPU real
+  // CPU bottleneck: CPU techo < GPU techo en > 8% Y uso de GPU baja
+  // GPU bottleneck: GPU techo <= CPU techo Y uso de GPU esta alto
+  // Balanced: la diferencia es chica
+  let diagnosis;
+  if (bottleneckRaw > 8 && gpuUsage < 88) {
+    diagnosis = "CPU bottleneck";
+  } else if (bottleneckRaw < -8 && gpuUsage >= 90) {
+    diagnosis = "GPU bottleneck";
+  } else {
+    diagnosis = "Balanced";
+  }
+
+  // El % que mostramos en el gauge: magnitud del desequilibrio
+  const bottleneckDisplay = Math.abs(Math.round(bottleneckRaw));
+
+  return { finalAvg, finalLow, gpuUsage, bottleneckDisplay, diagnosis };
+}
+
+// Lows reales dependen de la varianza de frame time del componente limitante.
+// CPU-bound => frame scheduling variable => lows mas bajos relativos al avg
+// GPU-bound => frame time mas estable => lows mas cercanos al avg
+// X3D cache reduce mucho la varianza en CPU-bound (por eso mejora los lows)
+function deriveRealistic1pLow(finalAvg, finalLow, cpuCeiling, gpuCeiling, cpuProfile, game) {
+  const cpuLimited = cpuCeiling.avg < gpuCeiling.avg * 0.92;
+
+  if (cpuLimited) {
+    // Varianza tipica CPU-bound: 1% low ~ 65-75% del avg
+    // X3D reduce varianza: sube el ratio hasta ~78%
+    const baseRatio = game.category === "CPU-bound" ? 0.68 : 0.73;
+    const x3dBoost  = cpuProfile.cacheClass === "x3d" ? 0.07 : 0;
+    const coreBoost = Math.min(Math.max(cpuProfile.cores - 6, 0) * 0.008, 0.04);
+    const ratio = baseRatio + x3dBoost + coreBoost;
+    return Math.round(finalAvg * ratio);
+  }
+
+  // GPU-bound: frame time mas estable, 1% low ~ 78-85% del avg
+  const gpuRatio = game.category === "GPU-bound" ? 0.82 : 0.78;
+  return Math.round(finalAvg * gpuRatio);
 }
 
 function getConfidence(cpuName, gpuName, gameName, ramPenalty) {
   const levels = ["low", "medium", "high"];
-  const cpuConfidence = levels.indexOf(MODEL.cpus[cpuName].confidence);
-  const gpuConfidence = levels.indexOf(MODEL.gpus[gpuName].confidence);
-  const gameConfidence = levels.indexOf(MODEL.games[gameName].confidence);
-  const score = Math.min(cpuConfidence, gpuConfidence, gameConfidence) - ramPenalty;
+  const score  = Math.min(
+    levels.indexOf(MODEL.cpus[cpuName].confidence),
+    levels.indexOf(MODEL.gpus[gpuName].confidence),
+    levels.indexOf(MODEL.games[gameName].confidence)
+  ) - ramPenalty;
 
-  if (score >= 2) {
-    return "high";
-  }
-
-  if (score >= 1) {
-    return "medium";
-  }
-
-  return "low";
-}
-
-function getResolutionAdjustedCeilings(cpuRef, gpuRef, resolution) {
-  const resolutionProfile = MODEL.resolutions[resolution];
-
-  return {
-    cpuAvg: Math.round(cpuRef.avg * resolutionProfile.cpuScale),
-    cpuLow: Math.round(cpuRef.low1 * resolutionProfile.cpuScale),
-    gpuAvg: Math.round(gpuRef.avg * resolutionProfile.gpuScale),
-    gpuLow: Math.round(gpuRef.low1 * resolutionProfile.gpuScale),
-    usageDelta: resolutionProfile.usageDelta,
-  };
+  return score >= 2 ? "high" : score >= 1 ? "medium" : "low";
 }
 
 function calculateScenario(cpuName, gpuName) {
-  const gameName = gameSelect.value;
+  const gameName      = gameSelect.value;
   const resolutionName = resolutionSelect.value;
-  const ramCapacity = ramCapacitySelect.value;
-  const ramSpeed = ramSpeedSelect.value;
-  const ramChannel = ramChannelSelect.value;
-  const cpuProfile = MODEL.cpus[cpuName];
-  const gpuProfile = MODEL.gpus[gpuName];
-  const game = MODEL.games[gameName];
-  const ramModifiers = getRamModifiers(
+  const ramCapacity   = ramCapacitySelect.value;
+  const ramSpeed      = ramSpeedSelect.value;
+  const ramChannel    = ramChannelSelect.value;
+  const cpuProfile    = MODEL.cpus[cpuName];
+  const gpuProfile    = MODEL.gpus[gpuName];
+  const game          = MODEL.games[gameName];
+
+  // 1. Multiplicadores de RAM
+  const ramMult = getRamMultipliers(cpuProfile, gameName, ramCapacity, ramSpeed, ramChannel);
+
+  // 2. Techo independiente de GPU (sin considerar CPU)
+  const gpuCeiling = buildGpuCeiling(gpuName, gameName, state.preset, resolutionName);
+
+  // 3. Techo del CPU (con RAM aplicada)
+  const cpuCeiling = buildCpuCeiling(cpuName, gameName, state.preset, resolutionName, ramMult);
+
+  // 4. Combinar y derivar FPS final, gpuUsage y diagnostico
+  const derived = combineAndDerive(cpuCeiling, gpuCeiling, game, resolutionName, gpuProfile);
+
+  // 5. 1% lows realistas segun componente limitante
+  const realistic1pLow = deriveRealistic1pLow(
+    derived.finalAvg,
+    derived.finalLow,
+    cpuCeiling,
+    gpuCeiling,
     cpuProfile,
-    gameName,
-    ramCapacity,
-    ramSpeed,
-    ramChannel
-  );
-  const cpuRef = buildCpuReference(cpuName, gameName, state.preset);
-  const gpuRef = buildGpuReference(gpuName, gameName, state.preset);
-  const ceilings = getResolutionAdjustedCeilings(cpuRef, gpuRef, resolutionName);
-  const cpuAvg = Math.round(ceilings.cpuAvg * (1 + ramModifiers.avgModifier));
-  const cpuLow = Math.round(ceilings.cpuLow * (1 + ramModifiers.lowModifier));
-  const gpuAvg = ceilings.gpuAvg;
-  const gpuLow = ceilings.gpuLow;
-
-  const safeAvg = Math.floor(Math.min(cpuAvg, gpuAvg) * 0.985);
-  const safeLow = Math.floor(Math.min(cpuLow, gpuLow) * 0.97);
-  const confidence = getConfidence(
-    cpuName,
-    gpuName,
-    gameName,
-    ramModifiers.confidencePenalty
-  );
-  const spreadMap = { high: 0.06, medium: 0.09, low: 0.13 };
-  const spread = spreadMap[confidence];
-  const rangeMin = Math.max(18, Math.round(safeAvg * (1 - spread)));
-  const rangeMax = Math.max(rangeMin + 2, Math.round(safeAvg * (1 + spread * 0.6)));
-
-  const cpuLimited = cpuAvg <= gpuAvg * 0.94;
-  const gpuLimited = gpuAvg <= cpuAvg * 0.94;
-  const bottleneckGap = Math.abs(cpuAvg - gpuAvg) / Math.max(cpuAvg, gpuAvg, 1);
-  const gpuUsage = clamp(
-    Math.round((safeAvg / Math.max(gpuAvg, 1)) * 100 + ceilings.usageDelta + gpuProfile.saturationBias),
-    55,
-    99
+    game
   );
 
-  let diagnosis = "Balanced";
-
-  if (cpuLimited && gpuUsage < 90) {
-    diagnosis = "CPU bottleneck";
-  } else if (gpuLimited && gpuUsage >= 93) {
-    diagnosis = "GPU bottleneck";
-  }
-
-  const bottleneckPercentValue =
-    diagnosis === "Balanced" ? clamp(Math.round(bottleneckGap * 100 * 0.55), 4, 18) : clamp(Math.round(bottleneckGap * 100), 10, 38);
+  // 6. Confianza y rango
+  const confidence = getConfidence(cpuName, gpuName, gameName, ramMult.confidencePenalty);
+  const spreadMap  = { high: 0.055, medium: 0.085, low: 0.12 };
+  const spread     = spreadMap[confidence];
+  const rangeMin   = Math.max(14, Math.round(derived.finalAvg * (1 - spread)));
+  const rangeMax   = Math.round(derived.finalAvg * (1 + spread * 0.55));
 
   return {
-    diagnosis,
+    diagnosis:        derived.diagnosis,
     confidence,
-    average: clamp(safeAvg, 18, 520),
-    low1: clamp(safeLow, 14, 420),
-    range: { min: rangeMin, max: rangeMax },
-    gpuUsage,
-    bottleneckPercent: bottleneckPercentValue,
+    average:          clamp(derived.finalAvg, 14, 520),
+    low1:             clamp(realistic1pLow, 10, 420),
+    range:            { min: rangeMin, max: rangeMax },
+    gpuUsage:         derived.gpuUsage,
+    bottleneckPercent: clamp(derived.bottleneckDisplay, 0, 65),
+    // Pasamos los techos para buildReferenceText
+    _cpuCeiling:      cpuCeiling,
+    _gpuCeiling:      gpuCeiling,
     explanation: buildExplanation(
       cpuProfile,
       gpuProfile,
       game,
       resolutionName,
-      diagnosis,
+      derived.diagnosis,
       ramCapacity,
       ramSpeed,
-      ramChannel
+      ramChannel,
+      cpuCeiling,
+      gpuCeiling,
+      derived.gpuUsage
     ),
-    reference: buildReferenceText(gameName, cpuRef, gpuRef),
+    reference: buildReferenceText(gameName, cpuCeiling, gpuCeiling),
   };
 }
 
-function buildReferenceText(gameName, cpuRef, gpuRef) {
-  return `${gameName}: base CPU ${cpuRef.avg}/${cpuRef.low1} FPS en referencia CPU-limited y base GPU ${gpuRef.avg}/${gpuRef.low1} FPS en referencia GPU-limited. Luego se ajusta por RAM, preset y resolucion.`;
+function buildReferenceText(gameName, cpuCeiling, gpuCeiling) {
+  const dominante = cpuCeiling.avg < gpuCeiling.avg ? "CPU" : "GPU";
+  const diff = Math.abs(gpuCeiling.avg - cpuCeiling.avg);
+  const pct  = Math.round((diff / Math.max(gpuCeiling.avg, cpuCeiling.avg, 1)) * 100);
+  return `${gameName} — Techo CPU: ${cpuCeiling.avg} FPS avg / ${cpuCeiling.low1} low | Techo GPU: ${gpuCeiling.avg} FPS avg / ${gpuCeiling.low1} low. Desbalance entre techos: ${pct}% (${dominante} limita). El FPS final combina ambos techos segun el peso CPU/GPU del juego.`;
 }
 
-function buildExplanation(cpu, gpu, game, resolution, diagnosis, ramCapacity, ramSpeed, ramChannel) {
-  const memoryLine =
-    ramCapacity === "8 GB" || ramChannel === "Single channel"
-      ? `La memoria elegida (${ramCapacity}, ${ramSpeed}, ${ramChannel.toLowerCase()}) castiga bastante los 1% lows y puede provocar stutter o caidas en escenas cargadas.`
-      : `La configuracion de memoria (${ramCapacity}, ${ramSpeed}, ${ramChannel.toLowerCase()}) acompana razonablemente al conjunto.`;
+function buildExplanation(cpu, gpu, game, resolution, diagnosis, ramCapacity, ramSpeed, ramChannel, cpuCeiling, gpuCeiling, gpuUsage) {
+  const ramBad = ramCapacity === "8 GB" || ramChannel === "Single channel";
+  const memoryLine = ramBad
+    ? `La configuracion de RAM (${ramCapacity}, ${ramSpeed}, ${ramChannel.toLowerCase()}) reduce los 1% lows y puede generar stutter en escenas cargadas.`
+    : `La RAM (${ramCapacity}, ${ramSpeed}, ${ramChannel.toLowerCase()}) no es un cuello relevante en este escenario.`;
+
+  const gpuUsageNote = gpuUsage < 75
+    ? `El uso de GPU cayo a ${gpuUsage}% porque el CPU no puede alimentarla rapido.`
+    : gpuUsage >= 95
+    ? `La GPU corre al ${gpuUsage}% de uso, completamente saturada.`
+    : `La GPU opera al ${gpuUsage}% de uso, con algo de margen disponible.`;
 
   const reasonByDiagnosis = {
-    "CPU bottleneck": `El cuello aparece del lado del CPU: ${game.notes} ${cpu.notes}`,
-    Balanced: `La carga queda relativamente pareja entre CPU y GPU. ${cpu.notes}`,
-    "GPU bottleneck": `La limitacion principal cae en la GPU: ${gpu.notes} ${game.notes}`,
+    "CPU bottleneck": `El CPU es el cuello: su techo (${cpuCeiling.avg} FPS) queda por debajo del techo GPU (${gpuCeiling.avg} FPS). ${cpu.notes}`,
+    Balanced:         `Ambos componentes estan bien pareados. ${cpu.notes}`,
+    "GPU bottleneck": `La GPU es el cuello: su techo (${gpuCeiling.avg} FPS) limita antes que el CPU (${cpuCeiling.avg} FPS). ${gpu.notes}`,
   };
 
-  return `${reasonByDiagnosis[diagnosis]} En ${resolution}, el comportamiento de ${game.category.toLowerCase()} empuja este resultado. ${memoryLine}`;
+  return `${reasonByDiagnosis[diagnosis]} ${gpuUsageNote} En ${resolution} con ajuste ${game.category.toLowerCase()}: ${game.notes} ${memoryLine}`;
 }
 
 function getResultClass(diagnosis) {
@@ -1269,7 +1406,9 @@ function renderMain() {
   lowBar.style.width = `${clamp((result.low1 / 220) * 100, 4, 100)}%`;
   gpuBar.style.width = `${result.gpuUsage}%`;
   bottleneckPercent.textContent = `${result.bottleneckPercent}%`;
-  bottleneckGauge.style.setProperty("--gauge-value", `${result.bottleneckPercent}%`);
+  // Normalizar a 360deg: el bottleneck real va 0-65%, lo mapeamos a 0-100% visual
+  const gaugeNormalized = Math.min(result.bottleneckPercent / 65 * 100, 100);
+  bottleneckGauge.style.setProperty("--gauge-value", `${gaugeNormalized}%`);
 
   const gaugeColorMap = {
     "CPU bottleneck": "var(--danger)",
@@ -1446,3 +1585,116 @@ populateControls();
 attachHardwareSearches();
 attachEvents();
 handleUpdate();
+
+// ─── CHATBOT ─────────────────────────────────────────────────────────────────
+
+const CHATBOT_SYSTEM_PROMPT = `Sos un asistente especializado en rendimiento de hardware para gaming, integrado en una herramienta de estimacion de FPS. Respondés en español argentino, de forma clara, directa y sin paja.
+
+Tus areas de conocimiento:
+- CPUs y GPUs para gaming (AMD Ryzen, Intel Core, NVIDIA GeForce, AMD Radeon)
+- Conceptos como cuello de botella (bottleneck), 1% lows, uso de GPU, latencia de frame
+- RAM: capacidad, frecuencia, canal simple vs dual y su impacto en gaming
+- Resolucion y preset grafico y como afectan CPU vs GPU
+- La tecnologia 3D V-Cache de AMD (5800X3D, 5700X3D, 5500X3D, 7800X3D, etc.) y por que mejora gaming
+- DLSS, FSR, XeSS como tecnologias de escalado
+- Configuraciones recomendadas para distintos presupuestos
+
+La herramienta usa estimaciones conservadoras basadas en benchmarks reales. Cuando des numeros de FPS, aclarás que son estimaciones y pueden variar segun drivers, temperatura, mapa del juego y configuracion especifica.
+
+Respondé SOLO sobre temas de hardware gaming y rendimiento. Si te preguntan algo no relacionado, redirigí amablemente al tema.
+
+Limite: respuestas concisas, maximo 4-5 oraciones salvo que la pregunta requiera mas detalle.`;
+
+const chatbotMessages = [];
+
+async function sendChatMessage() {
+  const input = document.getElementById("chatbot-input");
+  const sendBtn = document.getElementById("chatbot-send");
+  const messagesContainer = document.getElementById("chatbot-messages");
+  const userText = input.value.trim();
+
+  if (!userText) return;
+
+  input.value = "";
+  input.disabled = true;
+  sendBtn.disabled = true;
+
+  let contextualText = userText;
+  if (chatbotMessages.length === 0) {
+    const ctx = `[Contexto actual: CPU=${cpuSelect.value}, GPU=${gpuSelect.value}, Juego=${gameSelect.value}, Resolución=${resolutionSelect.value}, RAM=${ramCapacitySelect.value} ${ramSpeedSelect.value} ${ramChannelSelect.value}]\n\n${userText}`;
+    contextualText = ctx;
+  }
+
+  const userBubble = document.createElement("div");
+  userBubble.className = "chat-bubble chat-user";
+  userBubble.textContent = userText;
+  messagesContainer.appendChild(userBubble);
+
+  const typingEl = document.createElement("div");
+  typingEl.className = "chat-bubble chat-bot chat-typing";
+  typingEl.innerHTML = "<span></span><span></span><span></span>";
+  messagesContainer.appendChild(typingEl);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+  chatbotMessages.push({ role: "user", content: contextualText });
+
+  try {
+    const response = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1000,
+        system: CHATBOT_SYSTEM_PROMPT,
+        messages: chatbotMessages,
+      }),
+    });
+
+    const data = await response.json();
+    const assistantText = data.content
+      .filter((b) => b.type === "text")
+      .map((b) => b.text)
+      .join("");
+
+    chatbotMessages.push({ role: "assistant", content: assistantText });
+
+    typingEl.remove();
+    const botBubble = document.createElement("div");
+    botBubble.className = "chat-bubble chat-bot";
+    botBubble.textContent = assistantText;
+    messagesContainer.appendChild(botBubble);
+  } catch (err) {
+    typingEl.remove();
+    const errBubble = document.createElement("div");
+    errBubble.className = "chat-bubble chat-bot chat-error";
+    errBubble.textContent = "No se pudo conectar. Revisá tu conexión e intentá de nuevo.";
+    messagesContainer.appendChild(errBubble);
+  }
+
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  input.disabled = false;
+  sendBtn.disabled = false;
+  input.focus();
+}
+
+function initChatbot() {
+  const sendBtn = document.getElementById("chatbot-send");
+  const input = document.getElementById("chatbot-input");
+
+  sendBtn.addEventListener("click", sendChatMessage);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  });
+
+  document.querySelectorAll(".chat-chip").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      input.value = chip.textContent.trim();
+      sendChatMessage();
+    });
+  });
+}
+
+initChatbot();
