@@ -3,305 +3,354 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GPU/CPU Gaming Performance Analyzer</title>
+    <title>🎮 GameCheck - Analizador de Rendimiento Gaming</title>
     <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <main class="app-shell">
-      <section class="panel hero">
-        <div class="hero-copy">
-          <p class="eyebrow">Estimaciones conservadoras</p>
-          <h1>GPU/CPU Gaming Performance Analyzer</h1>
-          <p class="intro">
-            Simula rendimiento gaming con una base de benchmarks conservadora, 1% lows,
-            uso de GPU, RAM y comportamiento por resolucion. El objetivo es acercarse a
-            un resultado creible, no al numero mas lindo.
-          </p>
+    <!-- Header Gaming -->
+    <header class="main-header">
+      <div class="header-content">
+        <div class="logo">
+          <span class="logo-icon">🎮</span>
+          <div class="logo-text">
+            <span class="logo-main">GameCheck</span>
+            <span class="logo-sub">Analizador de PC</span>
+          </div>
+        </div>
+        <nav class="main-nav">
+          <a href="#analyzer" class="nav-link active">Analizar</a>
+          <a href="#compare" class="nav-link">Comparar</a>
+          <a href="#methodology" class="nav-link">Cómo funciona</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero Section Gaming -->
+    <section class="hero-gaming">
+      <div class="hero-content">
+        <div class="hero-badge">⚡ Resultados en segundos</div>
+        <h1>¿Tu PC aguanta ese juego?</h1>
+        <p class="hero-description">
+          Descubre si tu procesador y tarjeta gráfica están balanceados o si tienes un cuello de botella. 
+          Análisis realista basado en benchmarks reales, no números inflados.
+        </p>
+        <div class="hero-stats-row">
+          <div class="stat-pill">
+            <span class="stat-icon">🎯</span>
+            <span>+50 CPUs</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">🖥️</span>
+            <span>+30 GPUs</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-icon">🎲</span>
+            <span>7 Juegos populares</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card gpu-card">
+          <span class="card-label">GPU</span>
+          <span class="card-value">RTX 4070</span>
+          <div class="card-bar"></div>
+        </div>
+        <div class="floating-card cpu-card">
+          <span class="card-label">CPU</span>
+          <span class="card-value">Ryzen 5 5600</span>
+          <div class="card-bar"></div>
+        </div>
+        <div class="score-preview">
+          <span class="score-label">Score</span>
+          <span class="score-number">87</span>
+          <span class="score-text">Excelente</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main App -->
+    <main class="app-container" id="analyzer">
+      <!-- Configuration Panel -->
+      <section class="config-section">
+        <div class="section-header">
+          <h2>⚙️ Configura tu PC</h2>
+          <p>Selecciona tus componentes para el análisis</p>
         </div>
 
-        <div class="hero-stats">
-          <article class="hero-chip">
-            <span>Modo</span>
-            <strong>Benchmark-safe</strong>
-          </article>
-          <article class="hero-chip">
-            <span>Salida</span>
-            <strong>FPS, 1% low y GPU usage</strong>
-          </article>
-          <article class="hero-chip">
-            <span>Enfoque</span>
-            <strong>Cuello realista, no inflado</strong>
-          </article>
+        <div class="preset-selector">
+          <span class="preset-label">Modo:</span>
+          <div class="preset-options" id="preset-switch">
+            <button type="button" class="preset-btn active" data-preset="competitive">
+              <span class="preset-icon">🏆</span>
+              <span class="preset-text">Competitivo</span>
+              <small>Máximos FPS</small>
+            </button>
+            <button type="button" class="preset-btn" data-preset="ultra">
+              <span class="preset-icon">🎨</span>
+              <span class="preset-text">Ultra</span>
+              <small>Máxima calidad</small>
+            </button>
+          </div>
         </div>
-      </section>
 
-      <section class="methodology-grid">
-        <article class="panel methodology-card">
-          <h2>1. Estructura de datos</h2>
-          <p>
-            Cada juego tiene categoria, preset y tablas de benchmark para CPU y GPU con
-            promedio, 1% low y uso de GPU en escenarios de referencia. Luego el modelo
-            aplica RAM, resolucion y cache extra como modificadores acotados.
-          </p>
-        </article>
-
-        <article class="panel methodology-card">
-          <h2>2. Supuestos</h2>
-          <p>
-            Las cifras parten de referencias conservadoras vistas en reviews y se ajustan
-            hacia abajo cuando falta informacion exacta. Los juegos CPU-bound premian mas
-            cache, RAM y CPU; los GPU-bound castigan antes a la grafica.
-          </p>
-        </article>
-
-        <article class="panel methodology-card">
-          <h2>3. Limitaciones</h2>
-          <p>
-            No reemplaza un benchmark real del equipo exacto. Drivers, parches, mapa,
-            ray tracing, DLSS/FSR, temperatura y segundo plano pueden mover los numeros.
-            Por eso las salidas muestran rango y confianza.
-          </p>
-        </article>
-      </section>
-
-      <section class="panel workspace">
-        <div class="controls-card">
-          <div class="section-head">
-            <div>
-              <p class="section-kicker">Configuracion</p>
-              <h2>Escenario principal</h2>
-            </div>
-
-            <div class="preset-switch" id="preset-switch" aria-label="Preset grafico">
-              <button type="button" class="preset-btn is-active" data-preset="competitive">
-                Competitive
-              </button>
-              <button type="button" class="preset-btn" data-preset="ultra">
-                Ultra
-              </button>
+        <div class="controls-grid">
+          <div class="control-group">
+            <label class="control-label">
+              <span class="label-icon">🧠</span>
+              Procesador (CPU)
+            </label>
+            <div class="search-wrapper">
+              <input type="text" id="cpu-search" class="search-input" placeholder="Buscar CPU..." autocomplete="off">
+              <select id="cpu-select" class="component-select"></select>
             </div>
           </div>
 
-          <form class="controls-grid" id="controls-form">
-            <label>
-              CPU
-              <span class="search-field">
-                <span class="search-icon" aria-hidden="true">⌕</span>
-                <input
-                  id="cpu-search"
-                  class="search-input"
-                  type="text"
-                  placeholder="Buscar procesador"
-                  autocomplete="off"
-                />
-              </span>
-              <select id="cpu-select"></select>
+          <div class="control-group">
+            <label class="control-label">
+              <span class="label-icon">🎮</span>
+              Tarjeta Gráfica (GPU)
             </label>
+            <div class="search-wrapper">
+              <input type="text" id="gpu-search" class="search-input" placeholder="Buscar GPU..." autocomplete="off">
+              <select id="gpu-select" class="component-select"></select>
+            </div>
+          </div>
 
-            <label>
-              GPU
-              <span class="search-field">
-                <span class="search-icon" aria-hidden="true">⌕</span>
-                <input
-                  id="gpu-search"
-                  class="search-input"
-                  type="text"
-                  placeholder="Buscar placa de video"
-                  autocomplete="off"
-                />
-              </span>
-              <select id="gpu-select"></select>
-            </label>
-
-            <label>
+          <div class="control-group">
+            <label class="control-label">
+              <span class="label-icon">🎯</span>
               Juego
-              <select id="game-select"></select>
             </label>
+            <select id="game-select" class="component-select"></select>
+          </div>
 
-            <label>
-              Resolucion
-              <select id="resolution-select"></select>
+          <div class="control-group">
+            <label class="control-label">
+              <span class="label-icon">📺</span>
+              Resolución
             </label>
+            <select id="resolution-select" class="component-select"></select>
+          </div>
 
-            <label>
-              RAM
-              <select id="ram-capacity-select"></select>
+          <div class="control-group ram-group">
+            <label class="control-label">
+              <span class="label-icon">💾</span>
+              Memoria RAM
             </label>
+            <div class="ram-controls">
+              <select id="ram-capacity-select" class="component-select"></select>
+              <select id="ram-speed-select" class="component-select"></select>
+              <select id="ram-channel-select" class="component-select"></select>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <label>
-              Frecuencia RAM
-              <select id="ram-speed-select"></select>
-            </label>
+      <!-- Results Panel -->
+      <section class="results-section">
+        <div id="result-card" class="result-card status-good">
+          <!-- Game Ready Score -->
+          <div class="score-section">
+            <div class="score-ring" id="score-ring">
+              <svg viewBox="0 0 120 120">
+                <circle class="score-ring-bg" cx="60" cy="60" r="54"/>
+                <circle class="score-ring-progress" id="score-progress" cx="60" cy="60" r="54"/>
+              </svg>
+              <div class="score-content">
+                <span class="score-value" id="game-score">85</span>
+                <span class="score-label">Game Ready</span>
+              </div>
+            </div>
+            <div class="score-info">
+              <h3 id="diagnosis-title">¡Equipo Balanceado! 🎉</h3>
+              <p id="diagnosis-desc">Tu CPU y GPU trabajan perfectamente juntos. Sin cuellos de botella significativos.</p>
+              <div class="confidence-badge" id="confidence-badge">
+                <span class="confidence-dot"></span>
+                Alta confianza
+              </div>
+            </div>
+          </div>
 
-            <label>
-              Canal
-              <select id="ram-channel-select"></select>
-            </label>
-          </form>
+          <!-- Metrics Grid -->
+          <div class="metrics-grid">
+            <div class="metric-box fps-box">
+              <div class="metric-icon">🔥</div>
+              <div class="metric-data">
+                <span class="metric-value" id="avg-fps">165</span>
+                <span class="metric-unit">FPS</span>
+              </div>
+              <span class="metric-label">Promedio</span>
+            </div>
 
-          <div class="reference-note">
-            <strong>Modelo:</strong>
-            <span id="reference-text"></span>
+            <div class="metric-box low-box">
+              <div class="metric-icon">⚡</div>
+              <div class="metric-data">
+                <span class="metric-value" id="low-fps">142</span>
+                <span class="metric-unit">FPS</span>
+              </div>
+              <span class="metric-label">1% Low</span>
+            </div>
+
+            <div class="metric-box gpu-box">
+              <div class="metric-icon">🖥️</div>
+              <div class="metric-data">
+                <span class="metric-value" id="gpu-usage">94</span>
+                <span class="metric-unit">%</span>
+              </div>
+              <span class="metric-label">Uso GPU</span>
+            </div>
+
+            <div class="metric-box range-box">
+              <div class="metric-icon">📊</div>
+              <div class="metric-data">
+                <span class="metric-value range" id="fps-range">155-175</span>
+              </div>
+              <span class="metric-label">Rango esperado</span>
+            </div>
+          </div>
+
+          <!-- Visual Bars -->
+          <div class="performance-bars">
+            <div class="bar-item">
+              <span class="bar-label">FPS Promedio</span>
+              <div class="bar-track">
+                <div class="bar-fill fps-bar" id="avg-bar" style="width: 85%"></div>
+              </div>
+              <span class="bar-value" id="avg-bar-val">165</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">1% Low (mínimos)</span>
+              <div class="bar-track">
+                <div class="bar-fill low-bar" id="low-bar" style="width: 78%"></div>
+              </div>
+              <span class="bar-value" id="low-bar-val">142</span>
+            </div>
+            <div class="bar-item">
+              <span class="bar-label">Uso de GPU</span>
+              <div class="bar-track">
+                <div class="bar-fill usage-bar" id="usage-bar" style="width: 94%"></div>
+              </div>
+              <span class="bar-value" id="usage-bar-val">94%</span>
+            </div>
+          </div>
+
+          <!-- Explanation -->
+          <div class="explanation-box" id="explanation-box">
+            <div class="explanation-header">
+              <span class="explanation-icon">💡</span>
+              <span>¿Qué significa esto?</span>
+            </div>
+            <p id="explanation-text">Tu RTX 3080 está trabajando al 94% de su capacidad, lo cual es excelente. El Ryzen 5 5600X la alimenta sin problemas. En 1440p este combo rinde de maravilla.</p>
+          </div>
+
+          <!-- Reference Note -->
+          <div class="reference-note" id="reference-note">
+            <span class="ref-icon">📋</span>
+            <span class="ref-text">Basado en benchmarks reales con ajustes conservadores</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparison Section -->
+      <section class="comparison-section" id="compare">
+        <div class="section-header">
+          <h2>⚔️ Comparar CPUs</h2>
+          <p>¿Vale la pena el upgrade?</p>
+        </div>
+
+        <div class="compare-controls">
+          <div class="compare-item-control">
+            <label>CPU Actual</label>
+            <div class="search-wrapper">
+              <input type="text" id="compare-cpu-a-search" class="search-input" placeholder="Buscar..." autocomplete="off">
+              <select id="compare-cpu-a" class="component-select"></select>
+            </div>
+          </div>
+          <div class="compare-vs">VS</div>
+          <div class="compare-item-control">
+            <label>CPU Nueva</label>
+            <div class="search-wrapper">
+              <input type="text" id="compare-cpu-b-search" class="search-input" placeholder="Buscar..." autocomplete="off">
+              <select id="compare-cpu-b" class="component-select"></select>
+            </div>
           </div>
         </div>
 
-        <div class="result-stack">
-          <article id="result-card" class="result-card result-balanced">
-            <div class="result-head">
-              <div>
-                <p class="section-kicker">Diagnostico</p>
-                <h2 id="diagnosis-text">Balanced</h2>
-              </div>
+        <div id="compare-results" class="compare-results-container"></div>
+      </section>
 
-              <div class="result-side">
-                <div class="gauge-card">
-                  <div
-                    class="bottleneck-gauge"
-                    id="bottleneck-gauge"
-                    style="--gauge-value: 0%;"
-                  >
-                    <div class="gauge-inner">
-                      <strong id="bottleneck-percent">0%</strong>
-                      <span>Cuello</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="confidence-pill" id="confidence-pill">Confianza media</div>
-              </div>
-            </div>
-
-            <div class="metric-grid">
-              <article class="metric-card">
-                <span>FPS promedio</span>
-                <strong id="avg-fps-value">0</strong>
-              </article>
-              <article class="metric-card">
-                <span>Rango estimado</span>
-                <strong id="range-value">0 - 0</strong>
-              </article>
-              <article class="metric-card">
-                <span>1% low</span>
-                <strong id="low-value">0</strong>
-              </article>
-              <article class="metric-card">
-                <span>Uso de GPU</span>
-                <strong id="gpu-usage-value">0%</strong>
-              </article>
-            </div>
-
-            <div class="chart-card">
-              <div class="chart-row">
-                <span>FPS promedio</span>
-                <div class="bar-track">
-                  <div id="avg-bar" class="bar-fill bar-fps"></div>
-                </div>
-              </div>
-              <div class="chart-row">
-                <span>1% low</span>
-                <div class="bar-track">
-                  <div id="low-bar" class="bar-fill bar-low"></div>
-                </div>
-              </div>
-              <div class="chart-row">
-                <span>Uso de GPU</span>
-                <div class="bar-track">
-                  <div id="gpu-bar" class="bar-fill bar-gpu"></div>
-                </div>
-              </div>
-            </div>
-
-            <p id="explanation-text" class="explanation"></p>
-          </article>
-
-          <article class="comparison-card">
-            <div class="section-head">
-              <div>
-                <p class="section-kicker">Comparacion</p>
-                <h2>CPU vs CPU</h2>
-              </div>
-            </div>
-
-            <div class="compare-controls">
-              <label>
-                CPU A
-                <span class="search-field">
-                  <span class="search-icon" aria-hidden="true">⌕</span>
-                  <input
-                    id="compare-cpu-a-search"
-                    class="search-input"
-                    type="text"
-                    placeholder="Buscar CPU A"
-                    autocomplete="off"
-                  />
-                </span>
-                <select id="compare-cpu-a"></select>
-              </label>
-
-              <label>
-                CPU B
-                <span class="search-field">
-                  <span class="search-icon" aria-hidden="true">⌕</span>
-                  <input
-                    id="compare-cpu-b-search"
-                    class="search-input"
-                    type="text"
-                    placeholder="Buscar CPU B"
-                    autocomplete="off"
-                  />
-                </span>
-                <select id="compare-cpu-b"></select>
-              </label>
-            </div>
-
-            <div id="compare-results" class="compare-results"></div>
-          </article>
+      <!-- Methodology -->
+      <section class="methodology-section" id="methodology">
+        <h2>🧪 ¿Cómo calculamos todo?</h2>
+        <div class="methodology-grid">
+          <div class="method-card">
+            <div class="method-icon">📊</div>
+            <h3>Datos Reales</h3>
+            <p>Usamos benchmarks de fuentes confiables (Hardware Unboxed, Gamers Nexus, Tom's Hardware) y ajustamos hacia abajo para no inflar expectativas.</p>
+          </div>
+          <div class="method-card">
+            <div class="method-icon">🎯</div>
+            <h3>1% Lows</h3>
+            <p>Los mínimos son tan importantes como el promedio. Un juego a 144 FPS no sirve si baja a 30 en combates intensos.</p>
+          </div>
+          <div class="method-card">
+            <div class="method-icon">⚖️</div>
+            <h3>Balance Real</h3>
+            <p>No decimos "compra lo más caro". Mostramos cuándo tu GPU se queda esperando al CPU (y viceversa) para optimizar tu presupuesto.</p>
+          </div>
         </div>
       </section>
     </main>
 
-      <section class="panel chatbot-section">
-        <div class="chatbot-header">
-          <div>
-            <p class="section-kicker">Asistente IA</p>
-            <h2>Consultas de hardware</h2>
+    <!-- Floating Chat Widget -->
+    <div id="chat-widget" class="chat-widget">
+      <div class="chat-bubble-trigger" id="chat-trigger">
+        <div class="chat-icon">💬</div>
+        <div class="chat-notification" id="chat-notification">1</div>
+        <div class="chat-pulse"></div>
+      </div>
+      
+      <div class="chat-window" id="chat-window">
+        <div class="chat-header">
+          <div class="chat-header-info">
+            <div class="chat-avatar">🤖</div>
+            <div class="chat-title">
+              <span class="chat-name">Asistente GameCheck</span>
+              <span class="chat-status">
+                <span class="status-dot online"></span>
+                En línea
+              </span>
+            </div>
           </div>
-          <div class="chatbot-status">
-            <span class="status-dot"></span>
-            <span>Online</span>
+          <button class="chat-close" id="chat-close">✕</button>
+        </div>
+        
+        <div class="chat-messages" id="chat-messages">
+          <div class="message bot-message">
+            <div class="message-avatar">🤖</div>
+            <div class="message-content">
+              <p>¡Hola gamer! 👋 Soy tu asistente de hardware. ¿Tienes dudas sobre cuellos de botella, qué componente comprar, o si tu PC corre algún juego específico?</p>
+              <div class="quick-replies">
+                <button class="quick-reply" data-question="¿Qué es un cuello de botella?">¿Qué es un cuello de botella?</button>
+                <button class="quick-reply" data-question="¿Vale la pena el 5800X3D?">¿Vale la pena el 5800X3D?</button>
+                <button class="quick-reply" data-question="¿Cuánta RAM necesito?">¿Cuánta RAM necesito?</button>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="chat-chips-row">
-          <button type="button" class="chat-chip">¿Qué es un 1% low?</button>
-          <button type="button" class="chat-chip">¿Vale la pena la 3D V-Cache?</button>
-          <button type="button" class="chat-chip">¿Cuánta RAM necesito para gaming?</button>
-          <button type="button" class="chat-chip">¿Qué diferencia hay entre 1080p y 1440p?</button>
-          <button type="button" class="chat-chip">¿Qué es DLSS y FSR?</button>
-        </div>
-
-        <div id="chatbot-messages" class="chatbot-messages">
-          <div class="chat-bubble chat-bot chat-intro">
-            Hola! Soy tu asistente de hardware gaming. Podés preguntarme sobre CPUs, GPUs, RAM, resoluciones, bottleneck, 1% lows o cualquier duda técnica. También tengo en cuenta la configuración que tenés cargada en la herramienta.
-          </div>
-        </div>
-
-        <div class="chatbot-input-row">
-          <input
-            id="chatbot-input"
-            class="chatbot-input"
-            type="text"
-            placeholder="Preguntá algo sobre tu setup..."
-            autocomplete="off"
-          />
-          <button id="chatbot-send" type="button" class="chatbot-send-btn" aria-label="Enviar">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        
+        <div class="chat-input-area">
+          <input type="text" id="chat-input" class="chat-input" placeholder="Escribe tu pregunta..." autocomplete="off">
+          <button id="chat-send" class="chat-send-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="22" y1="2" x2="11" y2="13"></line>
               <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
             </svg>
           </button>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
 
     <script src="script.js"></script>
   </body>
