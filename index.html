@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calculadora de Bottleneck PC 2025 | Analiza CPU vs GPU Gratis</title>
+<meta name="description" content="Calcula el cuello de botella de tu PC gratis. Analiza bottleneck entre CPU y GPU con nuestra calculadora avanzada. Más de 130 modelos de hardware. Resultados precisos con recomendaciones de upgrade."/>
+<meta name="keywords" content="bottleneck calculadora, cuello de botella PC, CPU vs GPU rendimiento, calculadora bottleneck, evitar bottleneck gaming, mejores combinaciones hardware"/>
+<meta name="author" content="PC Bottleneck Calculator"/>
+<meta name="robots" content="index, follow"/>
+<meta name="googlebot" content="index, follow"/>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Calculadora de Bottleneck PC 2025 | Analiza CPU vs GPU"/>
+<meta property="og:description" content="Descubre si tu CPU o GPU limita el rendimiento de tu PC. Calculadora gratuita con 130+ modelos de hardware."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://USERNAME.github.io/fps-check/"/>
+<meta property="og:image" content="https://USERNAME.github.io/fps-check/assets/img/og-image.jpg"/>
+<meta property="og:locale" content="es_ES"/>
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Calculadora de Bottleneck PC 2025"/>
+<meta name="twitter:description" content="Analiza el cuello de botella entre tu CPU y GPU. Resultados precisos y recomendaciones de upgrade."/>
+<meta name="twitter:image" content="https://USERNAME.github.io/fps-check/assets/img/og-image.jpg"/>
+
+<!-- Canonical -->
+<link rel="canonical" href="https://USERNAME.github.io/fps-check/"/>
+
+<!-- Preconnect -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+
+<!-- Styles -->
+<link rel="stylesheet" href="assets/css/main.css?v=1"/>
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora de Bottleneck PC",
+  "description": "Calcula el cuello de botella entre CPU y GPU. Análisis preciso con 130+ modelos de hardware.",
+  "url": "https://USERNAME.github.io/fps-check/",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "1250"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="main-nav" role="navigation" aria-label="Navegación principal">
+  <div class="nav-container">
+    <a href="index.html" class="nav-logo">Bottleneck<span>Calc</span></a>
+    <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="calculadora/">Calculadora</a></li>
+      <li><a href="cpu/">CPUs</a></li>
+      <li><a href="gpu/">GPUs</a></li>
+      <li><a href="comparativas/">Comparativas</a></li>
+      <li><a href="guias/">Guías</a></li>
+      <li><a href="blog/">Blog</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<header class="hero">
+  <div class="hero-content">
+    <h1 class="hero-title">Calculadora de Bottleneck PC</h1>
+    <p class="hero-subtitle">Descubre si tu <strong>CPU o GPU limita el rendimiento</strong> de tu PC. Análisis preciso con más de <strong>130 modelos de hardware</strong> y recomendaciones de upgrade personalizadas.</p>
+    <div class="hero-cta">
+      <a href="calculadora/" class="btn btn-primary btn-lg">Probar Calculadora Gratis</a>
+      <a href="#como-funciona" class="btn btn-outline btn-lg">Cómo Funciona</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-number">130+</span><span class="stat-label">Modelos de Hardware</span></div>
+      <div class="stat"><span class="stat-number">50K+</span><span class="stat-label">Análisis Realizados</span></div>
+      <div class="stat"><span class="stat-number">4.8★</span><span class="stat-label">Valoración Usuarios</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- Quick Calculator Embed -->
+<section class="section section-dark" id="calculadora">
+  <div class="container">
+    <h2 class="section-title">Calcula tu Bottleneck en Segundos</h2>
+    <p class="section-subtitle">Selecciona tus componentes y obtén un análisis detallado con recomendaciones</p>
+    
+    <div class="calculator-embed">
+      <div class="calc-form">
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="home-cpu">Procesador (CPU)</label>
+            <select id="home-cpu" class="calc-select">
+              <option value="">Selecciona CPU...</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="home-gpu">Tarjeta Gráfica (GPU)</label>
+            <select id="home-gpu" class="calc-select">
+              <option value="">Selecciona GPU...</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="home-ram">Memoria RAM</label>
+            <select id="home-ram" class="calc-select">
+              <option value="8">8 GB</option>
+              <option value="16" selected>16 GB</option>
+              <option value="32">32 GB</option>
+              <option value="64">64 GB</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="home-resolution">Resolución</label>
+            <select id="home-resolution" class="calc-select">
+              <option value="1080p">1920 x 1080 (1080p)</option>
+              <option value="1440p" selected>2560 x 1440 (1440p)</option>
+              <option value="4K">3840 x 2160 (4K)</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="home-workload">Juego / Uso</label>
+            <select id="home-workload" class="calc-select">
+              <option value="">Selecciona...</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="home-usecase">Tipo de Uso</label>
+            <select id="home-usecase" class="calc-select">
+              <option value="gaming" selected>Gaming</option>
+              <option value="streaming">Gaming + Streaming</option>
+              <option value="editing">Edición de Video</option>
+              <option value="productivity">Productividad Pesada</option>
+            </select>
+          </div>
+        </div>
+        <button id="home-calc-btn" class="btn btn-primary btn-block btn-lg">Calcular Bottleneck</button>
+      </div>
+      
+      <div class="calc-results" id="home-results" style="display:none">
+        <div class="result-header">
+          <div class="result-percent" id="home-percent">0%</div>
+          <div class="result-badge" id="home-badge">Analizando...</div>
+        </div>
+        <div class="result-bar">
+          <div class="result-bar-fill" id="home-bar"></div>
+        </div>
+        <div class="result-metrics">
+          <div class="result-metric">
+            <span class="result-metric-value" id="home-fps">--</span>
+            <span class="result-metric-label">FPS Estimado</span>
+          </div>
+          <div class="result-metric">
+            <span class="result-metric-value" id="home-gpu-usage">--</span>
+            <span class="result-metric-label">Uso GPU</span>
+          </div>
+          <div class="result-metric">
+            <span class="result-metric-value" id="home-cpu-usage">--</span>
+            <span class="result-metric-label">Uso CPU</span>
+          </div>
+        </div>
+        <div class="result-explanation" id="home-explanation"></div>
+        <div class="result-upgrades" id="home-upgrades"></div>
+        <a href="calculadora/" class="btn btn-outline btn-block">Ver Análisis Completo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section class="section" id="como-funciona">
+  <div class="container">
+    <h2 class="section-title">¿Cómo Funciona Nuestra Calculadora?</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">1</div>
+        <h3 class="feature-title">Selecciona tus Componentes</h3>
+        <p class="feature-desc">Elige tu CPU, GPU, RAM y resolución de pantalla de nuestra base de datos con más de 130 modelos actualizados a 2025.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">2</div>
+        <h3 class="feature-title">Análisis Inteligente</h3>
+        <p class="feature-desc">Nuestro algoritmo calcula el rendimiento real ajustado por resolución, tipo de juego y uso específico.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">3</div>
+        <h3 class="feature-title">Resultados Detallados</h3>
+        <p class="feature-desc">Obtén un porcentaje de bottleneck, explicación del porqué, y recomendaciones de upgrade personalizadas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Popular CPUs -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Procesadores Populares</h2>
+    <p class="section-subtitle">Análisis detallado de los CPUs más buscados para gaming</p>
+    <div class="hardware-grid">
+      <a href="cpu/ryzen-5-5600x.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>Ryzen 5 5600X</h3>
+        <p>6 cores / 12 threads | Zen 3</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="cpu/ryzen-5-5500x3d.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>Ryzen 5 5500X3D</h3>
+        <p>6 cores / 12 threads | 3D V-Cache</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="cpu/ryzen-7-5800x3d.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>Ryzen 7 5800X3D</h3>
+        <p>8 cores / 16 threads | 3D V-Cache</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="cpu/intel-core-i5-12400f.html" class="hardware-card">
+        <span class="hardware-badge intel">Intel</span>
+        <h3>Core i5-12400F</h3>
+        <p>6 cores / 12 threads | Alder Lake</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="cpu/intel-core-i5-13400f.html" class="hardware-card">
+        <span class="hardware-badge intel">Intel</span>
+        <h3>Core i5-13400F</h3>
+        <p>10 cores / 16 threads | Raptor Lake</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="cpu/ryzen-7-7800x3d.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>Ryzen 7 7800X3D</h3>
+        <p>8 cores / 16 threads | AM5</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+    </div>
+    <div class="section-cta">
+      <a href="cpu/" class="btn btn-outline">Ver Todos los CPUs →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Popular GPUs -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Tarjetas Gráficas Populares</h2>
+    <p class="section-subtitle">Las GPUs más buscadas para gaming en 2025</p>
+    <div class="hardware-grid">
+      <a href="gpu/rtx-3060.html" class="hardware-card">
+        <span class="hardware-badge nvidia">NVIDIA</span>
+        <h3>RTX 3060</h3>
+        <p>12 GB VRAM | Ampere</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="gpu/rtx-4060.html" class="hardware-card">
+        <span class="hardware-badge nvidia">NVIDIA</span>
+        <h3>RTX 4060</h3>
+        <p>8 GB VRAM | Ada Lovelace</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="gpu/rtx-4070.html" class="hardware-card">
+        <span class="hardware-badge nvidia">NVIDIA</span>
+        <h3>RTX 4070</h3>
+        <p>12 GB VRAM | DLSS 3</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="gpu/rtx-3080.html" class="hardware-card">
+        <span class="hardware-badge nvidia">NVIDIA</span>
+        <h3>RTX 3080</h3>
+        <p>10 GB VRAM | Ampere</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="gpu/rx-6600.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>RX 6600</h3>
+        <p>8 GB VRAM | RDNA 2</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+      <a href="gpu/rx-6700-xt.html" class="hardware-card">
+        <span class="hardware-badge amd">AMD</span>
+        <h3>RX 6700 XT</h3>
+        <p>12 GB VRAM | RDNA 2</p>
+        <span class="hardware-link">Ver análisis →</span>
+      </a>
+    </div>
+    <div class="section-cta">
+      <a href="gpu/" class="btn btn-outline">Ver Todas las GPUs →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Comparisons -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Comparativas Destacadas</h2>
+    <p class="section-subtitle">Duelos directos entre los procesadores y gráficas más populares</p>
+    <div class="comparison-grid">
+      <a href="comparativas/ryzen-5-5600x-vs-i5-12400f.html" class="comparison-card">
+        <div class="comparison-vs">VS</div>
+        <div class="comparison-item">
+          <span class="comparison-name">Ryzen 5 5600X</span>
+          <span class="comparison-brand amd">AMD</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-name">Core i5-12400F</span>
+          <span class="comparison-brand intel">Intel</span>
+        </div>
+        <span class="comparison-link">Ver comparativa →</span>
+      </a>
+      <a href="comparativas/rtx-3060-vs-rx-6600.html" class="comparison-card">
+        <div class="comparison-vs">VS</div>
+        <div class="comparison-item">
+          <span class="comparison-name">RTX 3060</span>
+          <span class="comparison-brand nvidia">NVIDIA</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-name">RX 6600</span>
+          <span class="comparison-brand amd">AMD</span>
+        </div>
+        <span class="comparison-link">Ver comparativa →</span>
+      </a>
+      <a href="comparativas/rtx-4070-vs-rx-7800-xt.html" class="comparison-card">
+        <div class="comparison-vs">VS</div>
+        <div class="comparison-item">
+          <span class="comparison-name">RTX 4070</span>
+          <span class="comparison-brand nvidia">NVIDIA</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-name">RX 7800 XT</span>
+          <span class="comparison-brand amd">AMD</span>
+        </div>
+        <span class="comparison-link">Ver comparativa →</span>
+      </a>
+      <a href="comparativas/ryzen-7-5800x3d-vs-i7-13700k.html" class="comparison-card">
+        <div class="comparison-vs">VS</div>
+        <div class="comparison-item">
+          <span class="comparison-name">Ryzen 7 5800X3D</span>
+          <span class="comparison-brand amd">AMD</span>
+        </div>
+        <div class="comparison-item">
+          <span class="comparison-name">Core i7-13700K</span>
+          <span class="comparison-brand intel">Intel</span>
+        </div>
+        <span class="comparison-link">Ver comparativa →</span>
+      </a>
+    </div>
+    <div class="section-cta">
+      <a href="comparativas/" class="btn btn-outline">Ver Todas las Comparativas →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Guides -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Guías Prácticas</h2>
+    <p class="section-subtitle">Aprende a optimizar tu PC y evitar cuellos de botella</p>
+    <div class="guides-grid">
+      <article class="guide-card">
+        <span class="guide-tag">Fundamentos</span>
+        <h3><a href="guias/como-evitar-bottleneck.html">Cómo Evitar el Bottleneck en tu PC</a></h3>
+        <p>Guía completa para identificar y prevenir cuellos de botella al armar o upgradear tu computadora.</p>
+        <div class="guide-meta">8 min de lectura</div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-tag">Recomendaciones</span>
+        <h3><a href="guias/mejor-cpu-para-rtx-3080.html">Mejor CPU para RTX 3080 en 2025</a></h3>
+        <p>Descubre qué procesador aprovecha al máximo una RTX 3080 sin generar cuello de botella.</p>
+        <div class="guide-meta">6 min de lectura</div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-tag">Recomendaciones</span>
+        <h3><a href="guias/mejor-gpu-para-ryzen-5.html">Mejor GPU para Ryzen 5 5600/5600X</a></h3>
+        <p>¿Qué tarjeta gráfica combina mejor con los Ryzen 5? Análisis por resolución y presupuesto.</p>
+        <div class="guide-meta">7 min de lectura</div>
+      </article>
+      <article class="guide-card">
+        <span class="guide-tag">Técnico</span>
+        <h3><a href="guias/gaming-1080p-vs-1440p-vs-4k.html">1080p vs 1440p vs 4K: ¿Qué Cambia?</a></h3>
+        <p>Cómo la resolución afecta el balance CPU/GPU y qué hardware necesitas para cada una.</p>
+        <div class="guide-meta">10 min de lectura</div>
+      </article>
+    </div>
+    <div class="section-cta">
+      <a href="guias/" class="btn btn-outline">Ver Todas las Guías →</a>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Preview -->
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Artículos del Blog</h2>
+    <p class="section-subtitle">Noticias, análisis y consejos sobre hardware PC</p>
+    <div class="blog-grid">
+      <article class="blog-card">
+        <span class="blog-date">Enero 2025</span>
+        <h3><a href="blog/que-es-el-bottleneck.html">¿Qué es el Bottleneck? Guía Completa 2025</a></h3>
+        <p>Explicamos qué es el cuello de botella, cómo se produce, y por qué no siempre es malo. Todo lo que necesitas saber.</p>
+      </article>
+      <article class="blog-card">
+        <span class="blog-date">Enero 2025</span>
+        <h3><a href="blog/cpu-vs-gpu-que-importa-mas.html">CPU vs GPU: ¿Qué Importa Más para Gaming?</a></h3>
+        <p>Análisis detallado de cuándo invertir más en procesador vs tarjeta gráfica según tu tipo de juego.</p>
+      </article>
+      <article class="blog-card">
+        <span class="blog-date">Diciembre 2024</span>
+        <h3><a href="blog/ram-y-bottleneck.html">¿Cuánta RAM Necesitas? 8GB vs 16GB vs 32GB</a></h3>
+        <p>La RAM también puede ser cuello de botella. Te mostramos cuánta necesitas en 2025.</p>
+      </article>
+    </div>
+    <div class="section-cta">
+      <a href="blog/" class="btn btn-outline">Ver Todo el Blog →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">Preguntas Frecuentes</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>¿Qué es un bottleneck o cuello de botella en PC?</summary>
+        <p>Un <strong>bottleneck</strong> o cuello de botella ocurre cuando un componente de tu PC (generalmente el CPU o GPU) limita el rendimiento del otro. Por ejemplo, si tienes una GPU muy potente pero un CPU débil, el procesador no podrá enviar frames suficientemente rápido a la tarjeta gráfica, desperdiciando su potencial.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Cómo se calcula el bottleneck?</summary>
+        <p>Nuestra calculadora compara el rendimiento relativo de tu CPU y GPU ajustado por resolución, tipo de juego y uso. El algoritmo considera benchmarks reales de fuentes como Hardware Unboxed, GamersNexus y TechPowerUp para dar resultados precisos.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿Un bottleneck del 10% es malo?</summary>
+        <p>No. Un bottleneck menor al 15% se considera "bien balanceado". Es prácticamente imperceptible en uso real. Solo se recomienda upgradear cuando el bottleneck supera el 30%.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿A qué resolución el bottleneck de CPU es peor?</summary>
+        <p>El bottleneck de CPU es más pronunciado a <strong>1080p</strong> porque la GPU renderiza frames más rápido, dejando al CPU como limitante. A 4K, la GPU trabaja más y el CPU tiene menos impacto.</p>
+      </details>
+      <details class="faq-item">
+        <summary>¿La RAM puede causar bottleneck?</summary>
+        <p>Sí. Con solo 8GB de RAM en juegos modernos puedes experimentar stuttering y caídas de FPS. 16GB es el mínimo recomendado para gaming en 2025, y 32GB ideal para streaming o multitarea.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer-main">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>BottleneckCalc</h4>
+        <p>La calculadora de bottleneck más precisa y completa. Más de 130 modelos de hardware analizados con datos reales.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Hardware</h4>
+        <ul>
+          <li><a href="cpu/">Procesadores (CPU)</a></li>
+          <li><a href="gpu/">Tarjetas Gráficas (GPU)</a></li>
+          <li><a href="comparativas/">Comparativas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contenido</h4>
+        <ul>
+          <li><a href="guias/">Guías Prácticas</a></li>
+          <li><a href="blog/">Blog</a></li>
+          <li><a href="calculadora/">Calculadora</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="/privacidad.html">Privacidad</a></li>
+          <li><a href="/terminos.html">Términos</a></li>
+          <li><a href="/contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p> 2025 BottleneckCalc. Datos de Hardware Unboxed, GamersNexus, TechPowerUp.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="assets/js/data.js?v=1"></script>
+<script src="assets/js/calculator.js?v=1"></script>
+<script src="assets/js/home.js?v=1"></script>
+</body>
+</html>
