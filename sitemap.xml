@@ -2,53 +2,53 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <!-- Core -->
-  <url><loc>https://bottleneckcalculator.pro/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
 
   <!-- Specialized calculators — each targets a different primary bottleneck factor -->
-  <url><loc>https://bottleneckcalculator.pro/calculadora/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/ia/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/edicion/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/rendering/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/streaming/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/calculadora/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/ia/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/edicion/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.95</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/rendering/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/streaming/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.90</priority></url>
 
   <!-- Hardware index pages -->
-  <url><loc>https://bottleneckcalculator.pro/cpu/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/comparativas/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.80</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/comparativas/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.80</priority></url>
 
   <!-- CPU detail pages -->
-  <url><loc>https://bottleneckcalculator.pro/cpu/ryzen-5-5600x.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/cpu/ryzen-5-5500x3d.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/cpu/ryzen-7-5800x3d.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/cpu/ryzen-7-7800x3d.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/cpu/intel-core-i5-12400f.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/cpu/intel-core-i5-13400f.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/ryzen-5-5600x.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/ryzen-5-5500x3d.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/ryzen-7-5800x3d.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/ryzen-7-7800x3d.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/intel-core-i5-12400f.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/cpu/intel-core-i5-13400f.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
 
   <!-- GPU detail pages -->
-  <url><loc>https://bottleneckcalculator.pro/gpu/rtx-3060.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/rtx-4060.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/rtx-4070.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/rtx-3080.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/rx-6600.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/gpu/rx-6700-xt.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rtx-3060.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rtx-4060.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rtx-4070.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rtx-3080.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.70</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rx-6600.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/gpu/rx-6700-xt.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
 
   <!-- Comparativas -->
-  <url><loc>https://bottleneckcalculator.pro/comparativas/ryzen-5-5600x-vs-i5-12400f.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/comparativas/rtx-3060-vs-rx-6600.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/comparativas/rtx-4070-vs-rx-7800-xt.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/comparativas/ryzen-7-5800x3d-vs-i7-13700k.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/comparativas/ryzen-5-5600x-vs-i5-12400f.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/comparativas/rtx-3060-vs-rx-6600.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/comparativas/rtx-4070-vs-rx-7800-xt.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/comparativas/ryzen-7-5800x3d-vs-i7-13700k.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
 
   <!-- Guías -->
-  <url><loc>https://bottleneckcalculator.pro/guias/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/guias/como-evitar-bottleneck.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/guias/mejor-cpu-para-rtx-3080.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/guias/mejor-gpu-para-ryzen-5.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/guias/gaming-1080p-vs-1440p-vs-4k.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/guias/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/guias/como-evitar-bottleneck.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/guias/mejor-cpu-para-rtx-3080.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/guias/mejor-gpu-para-ryzen-5.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/guias/gaming-1080p-vs-1440p-vs-4k.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.65</priority></url>
 
   <!-- Blog -->
-  <url><loc>https://bottleneckcalculator.pro/blog/</loc><lastmod>2025-04-25</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/blog/que-es-el-bottleneck.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/blog/cpu-vs-gpu-que-importa-mas.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
-  <url><loc>https://bottleneckcalculator.pro/blog/ram-y-bottleneck.html</loc><lastmod>2025-04-25</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/blog/</loc><lastmod>2026-04-26</lastmod><changefreq>weekly</changefreq><priority>0.75</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/blog/que-es-el-bottleneck.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/blog/cpu-vs-gpu-que-importa-mas.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
+  <url><loc>https://pionono32.github.io/calcular-cuello-de-botella-/blog/ram-y-bottleneck.html</loc><lastmod>2026-04-26</lastmod><changefreq>monthly</changefreq><priority>0.60</priority></url>
 
 </urlset>

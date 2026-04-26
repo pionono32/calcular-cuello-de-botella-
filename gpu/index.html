@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8"/>
@@ -7,14 +7,17 @@
 <meta name="description" content="Análisis completo de GPUs NVIDIA y AMD. Descubre qué tarjeta gráfica se ajusta a tu CPU sin generar cuello de botella. RTX 40, RX 7000 y más."/>
 <meta name="keywords" content="tarjetas gráficas gaming, GPU bottleneck, RTX 4060 vs RX 6600, mejores GPUs 2025"/>
 <meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://bottleneckcalculator.pro/gpu/"/>
+<link rel="canonical" href="https://pionono32.github.io/calcular-cuello-de-botella-/gpu/"/>
+<link rel="alternate" hreflang="es" href="https://pionono32.github.io/calcular-cuello-de-botella-/gpu/"/>
+<link rel="alternate" hreflang="x-default" href="https://pionono32.github.io/calcular-cuello-de-botella-/gpu/"/>
 <meta property="og:title" content="Tarjetas Gráficas para Gaming 2025"/>
 <meta property="og:description" content="Análisis de GPUs NVIDIA y AMD con detección de bottleneck."/>
 <meta property="og:type" content="website"/>
-<meta property="og:url" content="https://bottleneckcalculator.pro/gpu/"/>
+<meta property="og:url" content="https://pionono32.github.io/calcular-cuello-de-botella-/gpu/"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"/>
+<noscript><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/></noscript>
 <link rel="stylesheet" href="../assets/css/main.css?v=1"/>
 <style>
 .gpu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
@@ -31,6 +34,7 @@
 .filter-btn { padding: 8px 16px; border: 1px solid var(--border-default); background: var(--bg-elevated); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
 .filter-btn:hover, .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 </style>
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml"/>
 </head>
 <body>
 
@@ -53,6 +57,8 @@
       <button class="lang-btn" data-lang="en">EN</button>
     </div>  </div>
 </nav>
+
+<main id="main-content">
 
 <div class="breadcrumb">
   <div class="container">
@@ -102,7 +108,8 @@
   </div>
 </section>
 
-<footer class="footer-main">
+</main>
+<footer class="footer-main" role="contentinfo">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col"><h4>BottleneckCalc</h4><p>La calculadora de bottleneck más precisa y completa.</p></div>

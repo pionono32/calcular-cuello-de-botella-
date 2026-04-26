@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /assets/js/data.js
 
-Sitemap: https://bottleneckcalculator.pro/sitemap.xml
+Sitemap: https://pionono32.github.io/calcular-cuello-de-botella-/sitemap.xml
