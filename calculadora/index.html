@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calculadora de Bottleneck Avanzada 2025 | CPU vs GPU — BottleneckCalc</title>
+<meta name="description" content="Calculadora de bottleneck más precisa: CPU, GPU, calidad gráfica, almacenamiento y resolución. 130+ modelos, recomendaciones de upgrade y análisis por resolución. Gratis."/>
+<meta name="keywords" content="calculadora bottleneck, cuello de botella PC, bottleneck CPU GPU, analizar bottleneck, calculadora rendimiento PC 2025"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://bottleneckcalculator.pro/calculadora/"/>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Calculadora de Bottleneck Avanzada — CPU vs GPU 2025"/>
+<meta property="og:description" content="La calculadora de bottleneck más precisa. 130+ modelos, calidad gráfica, almacenamiento, análisis por resolución y recomendaciones de upgrade."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://bottleneckcalculator.pro/calculadora/"/>
+<meta property="og:image" content="https://bottleneckcalculator.pro/assets/img/og-calculator.jpg"/>
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Calculadora Bottleneck Avanzada — BottleneckCalc"/>
+<meta name="twitter:description" content="Calcula el cuello de botella de tu PC gratis. CPU, GPU, calidad, almacenamiento, 130+ modelos."/>
+<meta name="twitter:image" content="https://bottleneckcalculator.pro/assets/img/og-calculator.jpg"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/main.css?v=3"/>
+<link rel="stylesheet" href="../assets/css/calculator.css?v=2"/>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://bottleneckcalculator.pro/" },
+    { "@type": "ListItem", "position": 2, "name": "Calculadora", "item": "https://bottleneckcalculator.pro/calculadora/" }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Calculadora de Bottleneck — BottleneckCalc",
+  "url": "https://bottleneckcalculator.pro/calculadora/",
+  "description": "Calculadora avanzada de cuello de botella CPU/GPU con análisis por resolución, calidad gráfica y tipo de almacenamiento.",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="main-nav" role="navigation" aria-label="Navegación principal">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">Bottleneck<span>Calc</span></a>
+    <button class="nav-toggle" data-i18n-aria="nav.open_menu" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      <li><a href="../calculadora/index.html" class="active" data-i18n="nav.gaming">Gaming</a></li>
+      <li><a href="../ia/index.html"          data-i18n="nav.ia">IA / ML</a></li>
+      <li><a href="../edicion/index.html"      data-i18n="nav.edicion">Edición</a></li>
+      <li><a href="../rendering/index.html"    data-i18n="nav.rendering">Rendering</a></li>
+      <li><a href="../streaming/index.html"    data-i18n="nav.streaming">Streaming</a></li>
+      <li><a href="../cpu/index.html"          data-i18n="nav.cpus">CPUs</a></li>
+      <li><a href="../gpu/index.html"          data-i18n="nav.gpus">GPUs</a></li>
+      <li><a href="../blog/index.html"         data-i18n="nav.blog">Blog</a></li>
+    </ul>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span class="lang-sep" aria-hidden="true">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Breadcrumb -->
+<nav class="breadcrumb" aria-label="Ruta de navegación">
+  <div class="container">
+    <a href="../index.html" data-i18n="bc.home">Inicio</a>
+    <span>/</span>
+    <span data-i18n="bc.calc">Calculadora</span>
+  </div>
+</nav>
+
+<main class="calculator-page">
+  <div class="calc-layout">
+
+    <!-- ── SIDEBAR ───────────────────────────────────────────────────── -->
+    <aside class="calc-sidebar">
+      <div class="sidebar-header">
+        <h2 data-i18n="sidebar.title">Configuración</h2>
+        <span class="version">v3.1</span>
+      </div>
+
+      <div class="sidebar-body">
+
+        <!-- Components -->
+        <div class="sidebar-section">
+          <h3 class="section-label" data-i18n="sidebar.components">Componentes</h3>
+
+          <div class="field-group">
+            <label data-i18n="sidebar.cpu">Procesador (CPU)</label>
+            <div id="cpu-dropdown" class="custom-dropdown">
+              <div class="dropdown-trigger">
+                <span class="dropdown-text" data-i18n-ph="sidebar.cpu">Selecciona CPU...</span>
+                <span class="dropdown-arrow" aria-hidden="true">&#9662;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label data-i18n="sidebar.gpu">Tarjeta Gráfica (GPU)</label>
+            <div id="gpu-dropdown" class="custom-dropdown">
+              <div class="dropdown-trigger">
+                <span class="dropdown-text" data-i18n-ph="sidebar.gpu">Selecciona GPU...</span>
+                <span class="dropdown-arrow" aria-hidden="true">&#9662;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="calc-ram" data-i18n="sidebar.ram">Memoria RAM</label>
+            <select id="calc-ram" class="native-select">
+              <option value="8">8 GB</option>
+              <option value="16" selected>16 GB</option>
+              <option value="32">32 GB</option>
+              <option value="64">64 GB</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="sidebar-section">
+          <h3 class="section-label" data-i18n="sidebar.settings">Ajustes</h3>
+
+          <div class="field-group">
+            <label for="calc-resolution" data-i18n="sidebar.resolution">Resolución</label>
+            <select id="calc-resolution" class="native-select" data-i18n-select>
+              <option value="1080p" data-i18n="res.1080p">1920 × 1080 (1080p)</option>
+              <option value="1440p" selected data-i18n="res.1440p">2560 × 1440 (1440p)</option>
+              <option value="4K" data-i18n="res.4k">3840 × 2160 (4K)</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="calc-quality" data-i18n="sidebar.quality">Calidad Gráfica</label>
+            <select id="calc-quality" class="native-select" data-i18n-select>
+              <option value="low"      data-i18n="q.low">Baja (Low)</option>
+              <option value="medium"   data-i18n="q.medium">Media (Medium)</option>
+              <option value="high"     data-i18n="q.high">Alta (High)</option>
+              <option value="ultra" selected data-i18n="q.ultra">Ultra / Máximo</option>
+              <option value="ultra_rt" data-i18n="q.ultra_rt">Ultra + Ray Tracing</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="calc-workload" data-i18n="sidebar.workload">Juego / Uso</label>
+            <div id="workload-dropdown" class="custom-dropdown">
+              <div class="dropdown-trigger">
+                <span class="dropdown-text">Selecciona...</span>
+                <span class="dropdown-arrow" aria-hidden="true">&#9662;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label for="calc-usecase" data-i18n="sidebar.usecase">Tipo de Uso</label>
+            <select id="calc-usecase" class="native-select" data-i18n-select>
+              <option value="gaming"       selected data-i18n="uc.gaming">Gaming</option>
+              <option value="streaming"    data-i18n="uc.streaming">Gaming + Streaming</option>
+              <option value="editing"      data-i18n="uc.editing">Edición de Video / 3D</option>
+              <option value="productivity" data-i18n="uc.productivity">Productividad Pesada</option>
+            </select>
+          </div>
+
+          <div class="field-group">
+            <label for="calc-storage" data-i18n="sidebar.storage">Almacenamiento</label>
+            <select id="calc-storage" class="native-select" data-i18n-select>
+              <option value="HDD"       data-i18n="st.hdd">HDD — Disco Duro</option>
+              <option value="SATA SSD"  selected data-i18n="st.ssd">SSD SATA</option>
+              <option value="NVMe Gen3" data-i18n="st.nvme3">NVMe PCIe 3.0</option>
+              <option value="NVMe Gen4" data-i18n="st.nvme4">NVMe PCIe 4.0</option>
+              <option value="NVMe Gen5" data-i18n="st.nvme5">NVMe PCIe 5.0</option>
+            </select>
+            <!-- Storage warning — shown only for HDD -->
+            <div class="storage-warn" id="storage-warn-box"></div>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="sidebar-section">
+          <h3 class="section-label" data-i18n="sidebar.settings">Opciones</h3>
+          <div class="toggle-row">
+            <span class="toggle-label" data-i18n="sidebar.live">Actualización en vivo</span>
+            <div class="toggle-switch" id="live-toggle" role="switch" aria-checked="false"></div>
+          </div>
+        </div>
+
+        <button id="calc-btn" class="btn btn-primary btn-block" data-i18n="sidebar.btn">
+          Calcular Bottleneck
+        </button>
+
+      </div><!-- /sidebar-body -->
+    </aside>
+
+    <!-- ── MAIN RESULTS ─────────────────────────────────────────────── -->
+    <div class="calc-main">
+      <div class="results-header-bar">
+        <h1 data-i18n="results.title">Resultados del Análisis</h1>
+      </div>
+
+      <div class="results-content">
+
+        <!-- Empty State -->
+        <div class="empty-state" id="empty-state">
+          <div class="empty-icon" aria-hidden="true">&#128187;</div>
+          <h2 data-i18n="empty.title">Sin Datos</h2>
+          <p data-i18n="empty.desc">Selecciona tu CPU, GPU y juego/uso en el panel lateral, luego presiona Calcular para ver el análisis de bottleneck.</p>
+        </div>
+
+        <!-- Results Panel -->
+        <div class="results-panel" id="results-panel" style="display:none">
+
+          <!-- Hero result -->
+          <div class="result-hero">
+            <div class="result-hero-main">
+              <div class="result-percent-wrap">
+                <div class="result-percent" id="result-percent">0%</div>
+                <div class="result-badge" id="result-badge" data-i18n="results.analyzing">Analizando...</div>
+              </div>
+              <div class="result-bar-wrap">
+                <div class="result-bar-track">
+                  <div class="result-bar-fill" id="result-bar"></div>
+                </div>
+                <div class="result-bar-labels">
+                  <span data-i18n="bar.balanced">Balanceado</span>
+                  <span data-i18n="bar.moderate">Moderado</span>
+                  <span data-i18n="bar.severe">Severo</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metrics row -->
+          <div class="metrics-row">
+            <div class="metric-card">
+              <div class="metric-value" id="metric-fps">--</div>
+              <div class="metric-label" id="metric-fps-label" data-i18n="metric.fps">FPS Estimado</div>
+              <div class="metric-hint" data-i18n="metric.hint_avg">Promedio</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value" id="metric-low">--</div>
+              <div class="metric-label" data-i18n="metric.low">1% Low</div>
+              <div class="metric-hint" data-i18n="metric.hint_min">Mínimos</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value" id="metric-gpu-usage">--</div>
+              <div class="metric-label" data-i18n="metric.gpu">Uso GPU</div>
+              <div class="metric-hint" data-i18n="metric.hint_util">Utilización</div>
+            </div>
+            <div class="metric-card">
+              <div class="metric-value" id="metric-cpu-usage">--</div>
+              <div class="metric-label" data-i18n="metric.cpu">Uso CPU</div>
+              <div class="metric-hint" data-i18n="metric.hint_util">Utilización</div>
+            </div>
+          </div>
+
+          <!-- Explanation -->
+          <div class="explanation-card">
+            <h3 data-i18n="detail.title">Análisis Detallado</h3>
+            <div id="result-explanation" class="explanation-text"></div>
+          </div>
+
+          <!-- Resolution Impact -->
+          <div class="resolution-card">
+            <h3 data-i18n="res.title">Impacto por Resolución</h3>
+            <div class="resolution-grid" id="resolution-grid"></div>
+          </div>
+
+          <!-- Upgrades -->
+          <div class="upgrades-card" id="upgrades-card">
+            <h3 data-i18n="upgrades.title">Recomendaciones de Upgrade</h3>
+            <div id="upgrades-list"></div>
+          </div>
+
+          <!-- Component Details -->
+          <div class="details-grid">
+            <div class="detail-card">
+              <h4 data-i18n="component.cpu">CPU Seleccionada</h4>
+              <div id="cpu-details"></div>
+            </div>
+            <div class="detail-card">
+              <h4 data-i18n="component.gpu">GPU Seleccionada</h4>
+              <div id="gpu-details"></div>
+            </div>
+          </div>
+
+          <!-- Share -->
+          <div class="share-card">
+            <h3 data-i18n="share.title">Compartir Resultado</h3>
+            <div class="share-buttons">
+              <button class="btn btn-outline" onclick="shareResult('twitter')">Twitter / X</button>
+              <button class="btn btn-outline" onclick="shareResult('facebook')">Facebook</button>
+              <button class="btn btn-outline" onclick="copyLink()" data-i18n="share.copy">Copiar Link</button>
+            </div>
+          </div>
+
+        </div><!-- /results-panel -->
+      </div><!-- /results-content -->
+
+      <footer class="calc-footer" data-i18n="footer.data">
+        Datos de Hardware Unboxed, GamersNexus, TechPowerUp. Estimaciones aproximadas — el rendimiento real varía según configuración, drivers y versión del juego.
+      </footer>
+    </div><!-- /calc-main -->
+
+  </div><!-- /calc-layout -->
+</main>
+
+<!-- Footer -->
+<footer class="footer-main" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>BottleneckCalc — Gaming</h4>
+        <p>Calculadora avanzada de cuello de botella CPU/GPU con análisis por resolución, calidad gráfica y almacenamiento.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Calculadoras</h4>
+        <ul>
+          <li><a href="../calculadora/index.html">Gaming (GPU)</a></li>
+          <li><a href="../ia/index.html">IA / ML (VRAM)</a></li>
+          <li><a href="../edicion/index.html">Edición (CPU)</a></li>
+          <li><a href="../rendering/index.html">Rendering (CUDA)</a></li>
+          <li><a href="../streaming/index.html">Streaming (CPU/NVENC)</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hardware</h4>
+        <ul>
+          <li><a href="../cpu/index.html">Procesadores</a></li>
+          <li><a href="../gpu/index.html">GPUs</a></li>
+          <li><a href="../comparativas/index.html">Comparativas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="../blog/index.html">Blog</a></li>
+          <li><a href="../guias/index.html">Guías</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&#169; 2025 BottleneckCalc. Datos de TechPowerUp, Hardware Unboxed, GamersNexus.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/data.js?v=3"></script>
+<script src="../assets/js/i18n.js?v=1"></script>
+<script src="../assets/js/calculator.js?v=3"></script>
+<script src="../assets/js/calculator-ui.js?v=3"></script>
+</body>
+</html>

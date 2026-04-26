@@ -1,0 +1,388 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Calculadora Bottleneck IA 2025 | CPU vs GPU vs VRAM para Machine Learning</title>
+<meta name="description" content="Analiza el cuello de botella para IA y Machine Learning. CPU, GPU CUDA, VRAM y RAM. Descubre qué componente limita tu entrenamiento de modelos."/>
+<meta name="keywords" content="bottleneck IA, cuello de botella machine learning, GPU para IA, VRAM entrenamiento, CPU vs GPU IA"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://bottleneckcalculator.pro/ia/"/>
+<meta property="og:title" content="Calculadora Bottleneck para IA y Machine Learning"/>
+<meta property="og:description" content="Analiza qué componente limita tu trabajo de IA: CPU, GPU CUDA o VRAM."/>
+<meta property="og:type" content="website"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/main.css?v=1"/>
+<style>
+.calculator-embed { background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 32px; max-width: 700px; margin: 0 auto; }
+.calc-form { display: flex; flex-direction: column; gap: 16px; }
+.calc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.calc-field { display: flex; flex-direction: column; gap: 6px; }
+.calc-field label { font-size: 13px; font-weight: 600; color: var(--text-secondary); }
+.calc-select { width: 100%; padding: 11px 14px; border: 1px solid var(--border-default); border-radius: var(--radius); background: var(--bg-input); color: var(--text-primary); font-family: inherit; font-size: 14px; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%236e6e78' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+.calc-select:focus { outline: none; border-color: var(--accent); }
+.calc-results { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-default); }
+.result-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.result-percent { font-family: 'Nunito', sans-serif; font-size: 48px; font-weight: 900; line-height: 1; }
+.result-percent.balanced { color: var(--accent); }
+.result-percent.cpu { color: var(--danger); }
+.result-percent.gpu { color: var(--ok); }
+.result-badge { padding: 6px 14px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
+.result-badge.balanced { background: var(--accent-dim); color: var(--accent); border: 1px solid rgba(79,142,247,0.2); }
+.result-badge.cpu { background: var(--danger-dim); color: var(--danger); border: 1px solid rgba(226,77,77,0.2); }
+.result-badge.gpu { background: var(--ok-dim); color: var(--ok); border: 1px solid rgba(61,189,93,0.2); }
+.result-bar { height: 8px; background: var(--bg-input); border-radius: 999px; overflow: hidden; margin-bottom: 20px; }
+.result-bar-fill { height: 100%; border-radius: 999px; transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1); width: 0; }
+.result-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+.result-metric { background: var(--bg-surface); border: 1px solid var(--border-default); border-radius: var(--radius); padding: 16px; text-align: center; }
+.result-metric-value { display: block; font-family: 'Nunito', sans-serif; font-size: 24px; font-weight: 800; color: var(--text-primary); line-height: 1; margin-bottom: 4px; }
+.result-metric-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.warning-box { background: rgba(229,162,58,0.1); border: 1px solid rgba(229,162,58,0.3); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 16px; font-size: 13px; color: var(--warn); }
+.warning-box strong { color: var(--warn); }
+.tip-box { background: var(--accent-dim); border: 1px solid rgba(79,142,247,0.2); border-radius: var(--radius); padding: 16px 20px; margin: 20px 0; }
+.tip-box strong { color: var(--accent); }
+@media (max-width: 600px) { .calc-row { grid-template-columns: 1fr; } .result-metrics { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">Bottleneck<span>Calc</span></a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="../calculadora/index.html">Gaming</a></li>
+      <li><a href="index.html" class="active">IA</a></li>
+      <li><a href="../edicion/index.html">Edición</a></li>
+      <li><a href="../rendering/index.html">Render</a></li>
+      <li><a href="../streaming/index.html">Streaming</a></li>
+      <li><a href="../cpu/index.html">CPUs</a></li>
+      <li><a href="../gpu/index.html">GPUs</a></li>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span class="lang-sep" aria-hidden="true">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>  </div>
+</nav>
+
+<div class="breadcrumb">
+  <div class="container">
+    <a href="../index.html">Inicio</a> <span>/</span> <span>IA / Machine Learning</span>
+  </div>
+</div>
+
+<section class="hero" style="padding: 48px 24px;">
+  <div class="hero-content">
+    <h1 class="hero-title">Bottleneck para IA y Machine Learning</h1>
+    <p class="hero-subtitle">Descubre si tu <strong>CPU, GPU CUDA o VRAM</strong> limita el entrenamiento de modelos de IA. Análisis específico para PyTorch, TensorFlow y Stable Diffusion.</p>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Calculadora de Bottleneck para IA</h2>
+    <p class="section-subtitle">Selecciona tus componentes y descubre el cuello de botella en workloads de IA</p>
+    
+    <div class="calculator-embed">
+      <div class="calc-form">
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="ia-cpu">Procesador (CPU)</label>
+            <select id="ia-cpu" class="calc-select"></select>
+          </div>
+          <div class="calc-field">
+            <label for="ia-gpu">Tarjeta Gráfica (GPU)</label>
+            <select id="ia-gpu" class="calc-select"></select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="ia-ram">Memoria RAM</label>
+            <select id="ia-ram" class="calc-select">
+              <option value="16">16 GB</option>
+              <option value="32" selected>32 GB</option>
+              <option value="64">64 GB</option>
+              <option value="128">128 GB</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="ia-storage">Almacenamiento</label>
+            <select id="ia-storage" class="calc-select">
+              <option value="HDD">Disco Duro (HDD)</option>
+              <option value="SATA SSD">SSD SATA</option>
+              <option value="NVMe Gen3" selected>NVMe PCIe 3.0</option>
+              <option value="NVMe Gen4">NVMe PCIe 4.0</option>
+              <option value="NVMe Gen5">NVMe PCIe 5.0</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-row">
+          <div class="calc-field">
+            <label for="ia-workload">Tipo de IA</label>
+            <select id="ia-workload" class="calc-select">
+              <option value="training" selected>Entrenamiento de Modelos</option>
+              <option value="inference">Inferencia / Deploy</option>
+              <option value="stable-diffusion">Stable Diffusion</option>
+              <option value="llm">LLM (Large Language Models)</option>
+            </select>
+          </div>
+          <div class="calc-field">
+            <label for="ia-model-size">Tamaño del Modelo</label>
+            <select id="ia-model-size" class="calc-select">
+              <option value="small" selected>Pequeño (&lt; 1B params)</option>
+              <option value="medium">Mediano (1-7B params)</option>
+              <option value="large">Grande (7-30B params)</option>
+              <option value="xlarge">Muy Grande (30B+ params)</option>
+            </select>
+          </div>
+        </div>
+        <button id="ia-calc-btn" class="btn btn-primary btn-block btn-lg">Analizar Bottleneck IA</button>
+      </div>
+      
+      <div class="calc-results" id="ia-results" style="display:none">
+        <div class="result-header">
+          <div class="result-percent" id="ia-percent">0%</div>
+          <div class="result-badge" id="ia-badge">Analizando...</div>
+        </div>
+        <div class="result-bar">
+          <div class="result-bar-fill" id="ia-bar"></div>
+        </div>
+        <div id="ia-warnings"></div>
+        <div class="result-metrics">
+          <div class="result-metric">
+            <span class="result-metric-value" id="ia-cpu-score">--</span>
+            <span class="result-metric-label">Score CPU</span>
+          </div>
+          <div class="result-metric">
+            <span class="result-metric-value" id="ia-gpu-score">--</span>
+            <span class="result-metric-label">Score GPU</span>
+          </div>
+          <div class="result-metric">
+            <span class="result-metric-value" id="ia-vram-status">--</span>
+            <span class="result-metric-label">VRAM Status</span>
+          </div>
+        </div>
+        <div class="explanation-box" id="ia-explanation"></div>
+        <div id="ia-upgrades"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="section-title">¿Qué Limita el Rendimiento en IA?</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">GPU</div>
+        <h3 class="feature-title">GPU y CUDA Cores</h3>
+        <p class="feature-desc">Para entrenamiento de modelos, la GPU es el componente más importante. NVIDIA domina con CUDA. AMD ROCm está mejorando pero tiene soporte limitado.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">VRAM</div>
+        <h3 class="feature-title">VRAM para Modelos</h3>
+        <p class="feature-desc">La VRAM determina el tamaño máximo de modelo que puedes entrenar. 8GB es mínimo, 12GB recomendado, 24GB ideal para modelos grandes.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">RAM</div>
+        <h3 class="feature-title">RAM del Sistema</h3>
+        <p class="feature-desc">Para datasets grandes, necesitas RAM suficiente. 32GB es el mínimo recomendado. 64GB+ para datasets de imágenes de alta resolución.</p>
+      </div>
+    </div>
+    
+    <div class="tip-box">
+      <strong>Regla de oro para IA:</strong> La GPU con más VRAM que puedas pagar es la mejor inversión. Un RTX 3090 (24GB) es mejor para IA que un RTX 4080 (16GB) a pesar de ser más lento en gaming.
+    </div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">Recomendaciones por Presupuesto</h2>
+    <div class="guides-grid">
+      <article class="guide-card">
+        <span class="guide-tag">Budget</span>
+        <h3>Build IA Económica (~$800)</h3>
+        <p>CPU: Ryzen 5 5600X | GPU: RTX 3060 12GB | RAM: 32GB | SSD NVMe 1TB</p>
+        <p>Ideal para: Inferencia, fine-tuning pequeño, Stable Diffusion básico.</p>
+      </article>
+      <article class="guide-card">
+        <span class="guide-tag">Mid-Range</span>
+        <h3>Build IA Profesional (~$2000)</h3>
+        <p>CPU: Ryzen 7 5800X3D | GPU: RTX 4070 Ti 12GB | RAM: 64GB | SSD NVMe 2TB</p>
+        <p>Ideal para: Entrenamiento de modelos medianos, LLM 7B params, Stable Diffusion avanzado.</p>
+      </article>
+      <article class="guide-card">
+        <span class="guide-tag">High-End</span>
+        <h3>Build IA Enterprise (~$4000+)</h3>
+        <p>CPU: Ryzen 9 7950X3D | GPU: RTX 4090 24GB | RAM: 128GB | SSD NVMe 4TB</p>
+        <p>Ideal para: Entrenamiento de modelos grandes, LLM 30B+ params, investigación.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-main">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>BottleneckCalc</h4><p>La calculadora de bottleneck más precisa.</p></div>
+      <div class="footer-col"><h4>Calculadoras</h4><ul><li><a href="../calculadora/index.html">Gaming</a></li><li><a href="index.html">IA</a></li><li><a href="../edicion/index.html">Edición</a></li><li><a href="../rendering/index.html">Render</a></li></ul></div>
+      <div class="footer-col"><h4>Hardware</h4><ul><li><a href="../cpu/index.html">CPUs</a></li><li><a href="../gpu/index.html">GPUs</a></li><li><a href="../storage/index.html">Storage</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p> 2025 BottleneckCalc</p></div>
+  </div>
+</footer>
+
+<script src="../assets/js/data.js?v=2"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cpuSelect = document.getElementById('ia-cpu');
+  const gpuSelect = document.getElementById('ia-gpu');
+  
+  Object.keys(CPU_DATA).sort().forEach(cpu => {
+    const opt = document.createElement('option');
+    opt.value = cpu;
+    opt.textContent = cpu;
+    cpuSelect.appendChild(opt);
+  });
+  
+  Object.keys(GPU_DATA).sort().forEach(gpu => {
+    const opt = document.createElement('option');
+    opt.value = gpu;
+    opt.textContent = gpu;
+    gpuSelect.appendChild(opt);
+  });
+  
+  document.getElementById('ia-calc-btn').addEventListener('click', calculateIA);
+});
+
+function calculateIA() {
+  const cpuName = document.getElementById('ia-cpu').value;
+  const gpuName = document.getElementById('ia-gpu').value;
+  const ram = parseInt(document.getElementById('ia-ram').value);
+  const storage = document.getElementById('ia-storage').value;
+  const workload = document.getElementById('ia-workload').value;
+  const modelSize = document.getElementById('ia-model-size').value;
+  
+  const cpu = CPU_DATA[cpuName];
+  const gpu = GPU_DATA[gpuName];
+  const storageData = STORAGE_DATA[storage];
+  
+  // VRAM requirements by model size
+  const vramReq = { small: 6, medium: 12, large: 24, xlarge: 48 };
+  const ramReq = { small: 16, medium: 32, large: 64, xlarge: 128 };
+  
+  const requiredVram = vramReq[modelSize];
+  const requiredRam = ramReq[modelSize];
+  
+  // Calculate scores
+  let cpuScore = cpu.fpsAI;
+  let gpuScore = gpu.fpsAI;
+  
+  // RAM penalty for CPU-bound preprocessing
+  let ramFactor = 1.0;
+  if (ram < requiredRam) {
+    ramFactor = Math.max(0.5, 1.0 - ((requiredRam - ram) / requiredRam) * 0.5);
+  }
+  cpuScore *= ramFactor;
+  
+  // VRAM penalty
+  let vramFactor = 1.0;
+  if (gpu.vram < requiredVram) {
+    vramFactor = Math.max(0.3, 1.0 - ((requiredVram - gpu.vram) / requiredVram) * 0.7);
+  }
+  gpuScore *= vramFactor;
+  
+  // Storage penalty for dataset loading
+  const storagePenalty = storageData.impact.ai.datasetLoadPenalty;
+  const storageFactor = 1.0 - storagePenalty;
+  
+  // Final scores
+  const finalCpuScore = Math.round(cpuScore * storageFactor);
+  const finalGpuScore = Math.round(gpuScore * storageFactor);
+  
+  // Determine bottleneck
+  const maxScore = Math.max(finalCpuScore, finalGpuScore);
+  const minScore = Math.min(finalCpuScore, finalGpuScore);
+  const bottleneckPct = Math.min(Math.round(((maxScore - minScore) / maxScore) * 100), 65);
+  
+  let diagnosis, badgeClass, bottlenecked;
+  if (finalCpuScore < finalGpuScore * 0.75) {
+    diagnosis = "Cuello de Botella: CPU";
+    badgeClass = "cpu";
+    bottlenecked = "CPU";
+  } else if (finalGpuScore < finalCpuScore * 0.75) {
+    diagnosis = "Cuello de Botella: GPU";
+    badgeClass = "gpu";
+    bottlenecked = "GPU";
+  } else {
+    diagnosis = "Bien Balanceado";
+    badgeClass = "balanced";
+    bottlenecked = null;
+  }
+  
+  // Display results
+  const results = document.getElementById('ia-results');
+  results.style.display = 'block';
+  results.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  
+  document.getElementById('ia-percent').textContent = bottleneckPct + '%';
+  document.getElementById('ia-percent').className = 'result-percent ' + badgeClass;
+  document.getElementById('ia-badge').textContent = diagnosis;
+  document.getElementById('ia-badge').className = 'result-badge ' + badgeClass;
+  document.getElementById('ia-bar').style.width = bottleneckPct + '%';
+  document.getElementById('ia-bar').className = 'result-bar-fill ' + badgeClass;
+  
+  document.getElementById('ia-cpu-score').textContent = finalCpuScore;
+  document.getElementById('ia-gpu-score').textContent = finalGpuScore;
+  
+  const vramStatus = gpu.vram >= requiredVram ? 'OK (' + gpu.vram + 'GB)' : 'INSUFICIENTE (' + gpu.vram + 'GB < ' + requiredVram + 'GB)';
+  const vramEl = document.getElementById('ia-vram-status');
+  vramEl.textContent = vramStatus;
+  vramEl.style.color = gpu.vram >= requiredVram ? 'var(--ok)' : 'var(--danger)';
+  
+  // Warnings
+  const warningsDiv = document.getElementById('ia-warnings');
+  let warningsHTML = '';
+  if (gpu.vram < requiredVram) {
+    warningsHTML += '<div class="warning-box"><strong>VRAM Insuficiente:</strong> Tu GPU tiene ' + gpu.vram + 'GB pero el modelo requiere ~' + requiredVram + 'GB. El entrenamiento será extremadamente lento o fallará.</div>';
+  }
+  if (ram < requiredRam) {
+    warningsHTML += '<div class="warning-box"><strong>RAM Insuficiente:</strong> Tienes ' + ram + 'GB pero se recomiendan ' + requiredRam + 'GB para este tamaño de modelo.</div>';
+  }
+  if (storage === 'HDD') {
+    warningsHTML += '<div class="warning-box"><strong>Storage Lento:</strong> Un HDD ralentizará significativamente la carga de datasets. Se recomienda SSD NVMe.</div>';
+  }
+  if (!gpuName.includes('RTX') && !gpuName.includes('GTX')) {
+    warningsHTML += '<div class="warning-box"><strong>GPU AMD:</strong> AMD tiene soporte limitado para CUDA. Considera ROCm o una GPU NVIDIA para mejor compatibilidad.</div>';
+  }
+  warningsDiv.innerHTML = warningsHTML;
+  
+  // Explanation
+  let explanation = '';
+  if (bottlenecked === 'GPU') {
+    explanation = 'Tu <strong>' + gpuName + '</strong> es el factor limitante para IA. ';
+    if (gpu.vram < requiredVram) {
+      explanation += 'La VRAM insuficiente (' + gpu.vram + 'GB) es el problema principal. ';
+    } else {
+      explanation += 'Necesitas una GPU con más CUDA cores y mejor rendimiento en compute. ';
+    }
+    explanation += 'Considera upgradear a una RTX 4070 Ti (12GB), RTX 3090 (24GB) o RTX 4090 (24GB).';
+  } else if (bottlenecked === 'CPU') {
+    explanation = 'Tu <strong>' + cpuName + '</strong> limita el preprocesamiento de datos. ';
+    explanation += 'Para workloads de IA, un CPU con más cores acelera la preparación de datasets. ';
+    explanation += 'Considera un Ryzen 9 5900X o superior.';
+  } else {
+    explanation = 'Tu sistema está <strong>bien balanceado</strong> para IA. ';
+    explanation += 'Tanto CPU como GPU trabajan eficientemente juntos.';
+  }
+  document.getElementById('ia-explanation').innerHTML = explanation;
+}
+</script>
+<script src="../assets/js/i18n.js?v=1"></script>
+</body>
+</html>
+
+

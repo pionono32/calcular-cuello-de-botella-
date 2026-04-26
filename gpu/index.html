@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tarjetas Gráficas para Gaming 2025 | Análisis GPU y Bottleneck</title>
+<meta name="description" content="Análisis completo de GPUs NVIDIA y AMD. Descubre qué tarjeta gráfica se ajusta a tu CPU sin generar cuello de botella. RTX 40, RX 7000 y más."/>
+<meta name="keywords" content="tarjetas gráficas gaming, GPU bottleneck, RTX 4060 vs RX 6600, mejores GPUs 2025"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://bottleneckcalculator.pro/gpu/"/>
+<meta property="og:title" content="Tarjetas Gráficas para Gaming 2025"/>
+<meta property="og:description" content="Análisis de GPUs NVIDIA y AMD con detección de bottleneck."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://bottleneckcalculator.pro/gpu/"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="../assets/css/main.css?v=1"/>
+<style>
+.gpu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin-top: 32px; }
+.gpu-card { background: var(--bg-elevated); border: 1px solid var(--border-default); border-radius: var(--radius-lg); padding: 24px; text-decoration: none; color: inherit; transition: all 0.15s; }
+.gpu-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
+.gpu-card .brand { font-size: 10px; font-weight: 800; text-transform: uppercase; padding: 3px 8px; border-radius: var(--radius-sm); display: inline-block; margin-bottom: 10px; }
+.gpu-card .brand.nvidia { background: rgba(118,185,0,0.15); color: #76b900; }
+.gpu-card .brand.amd { background: rgba(237,28,36,0.15); color: #ed1c24; }
+.gpu-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+.gpu-card .specs { color: var(--text-secondary); font-size: 13px; margin-bottom: 12px; }
+.gpu-card .score { font-family: 'Nunito', sans-serif; font-size: 24px; font-weight: 800; color: var(--accent); }
+.gpu-card .score-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; font-weight: 700; }
+.filter-bar { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.filter-btn { padding: 8px 16px; border: 1px solid var(--border-default); background: var(--bg-elevated); color: var(--text-secondary); border-radius: var(--radius); cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; }
+.filter-btn:hover, .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="../index.html" class="nav-logo">Bottleneck<span>Calc</span></a>
+    <button class="nav-toggle" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+        <ul class="nav-links">
+      <li><a href="../calculadora/index.html">Gaming</a></li>
+      <li><a href="../ia/index.html">IA / ML</a></li>
+      <li><a href="../edicion/index.html">Edici&#243;n</a></li>
+      <li><a href="../rendering/index.html">Rendering</a></li>
+      <li><a href="../streaming/index.html">Streaming</a></li>
+      <li><a href="../cpu/index.html">CPUs</a></li>
+      <li><a href="../gpu/index.html">GPUs</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+    <div class="lang-toggle" role="group" aria-label="Idioma / Language">
+      <button class="lang-btn active" data-lang="es">ES</button>
+      <span class="lang-sep" aria-hidden="true">|</span>
+      <button class="lang-btn" data-lang="en">EN</button>
+    </div>  </div>
+</nav>
+
+<div class="breadcrumb">
+  <div class="container">
+    <a href="../index.html">Inicio</a> <span>/</span> <span>GPUs</span>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container">
+    <h1 class="section-title">Tarjetas Gráficas para Gaming</h1>
+    <p class="section-subtitle">Análisis completo de GPUs NVIDIA GeForce RTX y AMD Radeon. Encuentra la tarjeta gráfica ideal para tu CPU y resolución.</p>
+    
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">Todas</button>
+      <button class="filter-btn" data-filter="nvidia">NVIDIA</button>
+      <button class="filter-btn" data-filter="amd">AMD</button>
+      <button class="filter-btn" data-filter="budget">Budget</button>
+      <button class="filter-btn" data-filter="mid">Mid-Range</button>
+      <button class="filter-btn" data-filter="high">High-End</button>
+      <button class="filter-btn" data-filter="enthusiast">Enthusiast</button>
+    </div>
+    
+    <div class="gpu-grid" id="gpu-grid"></div>
+  </div>
+</section>
+
+<section class="section section-dark">
+  <div class="container">
+    <h2 class="section-title">¿Cómo Elegir tu GPU?</h2>
+    <div class="features-grid">
+      <div class="feature">
+        <div class="feature-icon">1</div>
+        <h3 class="feature-title">Resolución Primero</h3>
+        <p class="feature-desc">Para 1080p una GPU budget ($200-300) alcanza. 1440p requiere mid-range ($300-500). 4K necesita high-end ($500+).</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">2</div>
+        <h3 class="feature-title">VRAM Importa</h3>
+        <p class="feature-desc">8GB es el mínimo en 2025. 12GB recomendado para 1440p. 16GB+ ideal para 4K y texturas ultra.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">3</div>
+        <h3 class="feature-title">DLSS vs FSR</h3>
+        <p class="feature-desc">DLSS 3 de NVIDIA ofrece mejor calidad pero requiere RTX 40. FSR 3 de AMD funciona en más tarjetas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-main">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>BottleneckCalc</h4><p>La calculadora de bottleneck más precisa y completa.</p></div>
+      <div class="footer-col"><h4>Hardware</h4><ul><li><a href="../cpu/index.html">CPUs</a></li><li><a href="../gpu/index.html">GPUs</a></li><li><a href="../comparativas/index.html">Comparativas</a></li></ul></div>
+      <div class="footer-col"><h4>Contenido</h4><ul><li><a href="../guias/index.html">Guías</a></li><li><a href="../blog/index.html">Blog</a></li><li><a href="../calculadora/index.html">Calculadora</a></li></ul></div>
+      <div class="footer-col"><h4>Legal</h4><ul><li><a href="/privacidad.html">Privacidad</a></li><li><a href="/terminos.html">Términos</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p> 2025 BottleneckCalc</p></div>
+  </div>
+</footer>
+
+<script src="../assets/js/data.js?v=1"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const grid = document.getElementById('gpu-grid');
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  
+  function renderGPUs(filter) {
+    grid.innerHTML = '';
+    const gpus = Object.entries(GPU_DATA).sort((a, b) => b[1].score - a[1].score);
+    
+    gpus.forEach(([name, data]) => {
+      const brand = name.startsWith('RTX') || name.startsWith('GTX') ? 'nvidia' : 'amd';
+      if (filter !== 'all' && filter !== brand && filter !== data.tier) return;
+      
+      const card = document.createElement('a');
+      card.className = 'gpu-card';
+      card.href = `/gpu/${name.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '')}.html`;
+      card.innerHTML = `
+        <span class="brand ${brand}">${brand === 'nvidia' ? 'NVIDIA' : 'AMD'}</span>
+        <h3>${name}</h3>
+        <div class="specs">${data.vram} GB VRAM | ${data.arch} | ${data.tdp}W TDP</div>
+        <div class="score">${data.score}</div>
+        <div class="score-label">Gaming Score</div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+  
+  renderGPUs('all');
+  
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderGPUs(btn.dataset.filter);
+    });
+  });
+});
+</script>
+<script src="../assets/js/i18n.js?v=1"></script>
+</body>
+</html>
+
+
